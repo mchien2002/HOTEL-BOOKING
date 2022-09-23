@@ -30,7 +30,7 @@ class Rooms {
   @HiveField(7)
   int? _maximumGuests;
 
-  @HiveField(8) 
+  @HiveField(8)
   String? _name;
 
   @HiveField(9)

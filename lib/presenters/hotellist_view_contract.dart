@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 import 'package:hotel_service/data_sources/injection.dart';
-import 'package:hotel_service/data_sources/repository/hotel/hotel_repository.dart';
+import 'package:hotel_service/data_sources/repositories/hotel/hotel_repository.dart';
 
 abstract class HotelListViewContract{
   onLoadHotelComplete(List hotelList);

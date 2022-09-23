@@ -10,12 +10,11 @@ import 'package:hotel_service/models/hotel_data_model.dart';
 import 'package:hotel_service/models/price_model.dart';
 import 'package:hotel_service/models/room_model.dart';
 import 'package:hotel_service/models/roomtype_model.dart';
-import 'package:hotel_service/providers/booking_provider.dart';
-import 'package:hotel_service/providers/register_provider.dart';
-import 'package:hotel_service/providers/search_provider.dart';
-import 'package:hotel_service/views/system_screen/splash_screen.dart';
+import 'package:hotel_service/provider/booking_provider.dart';
+import 'package:hotel_service/provider/register_provider.dart';
+import 'package:hotel_service/provider/search_provider.dart';
+import 'package:hotel_service/view/system_screens/splash_screen.dart';
 import 'package:provider/provider.dart';
-
 void main() async{
   // ĐỔI MÀU STATUS BAR
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -33,7 +32,6 @@ void main() async{
   Hive.registerAdapter(RoomTypeAdapter());
   Hive.registerAdapter(RoomsAdapter());
   Hive.registerAdapter(PriceAdapter());
-  // MAIN FUNCTION
   runApp(
     MultiProvider(
       providers: [
