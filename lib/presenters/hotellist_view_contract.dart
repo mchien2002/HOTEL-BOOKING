@@ -12,7 +12,7 @@ class HotelListPresenter{
   HotelRepository? _repository;
 
   HotelListPresenter(this._view){
-    _repository = Injector().getData();
+    _repository = Injector().handleData();
   }
 
   loadHotelList(){

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_service/presenters/hotellist_view_contract.dart';
+import 'package:hotel_service/view/system_screens/loading_screen.dart';
 import '../../../data_sources/init.dart';
 import '../../../data_sources/repositories/hotel/hotel_repository_iml.dart';
 import 'card_mini.dart';
@@ -17,24 +19,34 @@ class MoreHotelWidget extends StatefulWidget {
   State<MoreHotelWidget> createState() => _MoreHotelWidgetState();
 } 
 
-class _MoreHotelWidgetState extends State<MoreHotelWidget> {
-  // LIST HOTEL DATA
-  var _hotelData = [];
-  // GET LIST HOTEL DATA 
-  getHotelData()async{
-    _hotelData = await HotelRepositoryIml().fetchHotelList();
-    setState(() {});
-  }
+class _MoreHotelWidgetState extends State<MoreHotelWidget> implements HotelListViewContract{
+  bool _isLoading = true;
+  List _hotelData = [];
+  HotelListPresenter? _hotelListPresenter;
 
   @override
-  void initState() {
-    getHotelData();
+  void initState(){
+    _hotelListPresenter = HotelListPresenter(this);
+    _hotelListPresenter!.loadHotelList();
     super.initState();
   }
 
   @override
+  onLoadHotelComplete(List hotelList) {
+    setState(() {
+      _hotelData = hotelList;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  onLoadError(String error) {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SliverGrid(
+    return _isLoading ? const SliverToBoxAdapter(child: LoadingScreen(),) : SliverGrid(
       // BUILD GRID VIEW FOR CARD MINI
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

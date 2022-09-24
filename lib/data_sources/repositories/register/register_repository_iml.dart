@@ -35,8 +35,8 @@ class RegisterRepositoryIml extends RegisterRepository{
       }
     }
     on DioError catch(error){
-      final errorMessage = DioExceptions.fromDioError(error).toString();
-      return errorMessage;
+      EasyLoading.dismiss();
+      throw DioExceptions.fromDioError(error).toString();
     }
   }
   

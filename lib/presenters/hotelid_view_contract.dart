@@ -11,7 +11,7 @@ class HotelByIDPresenter{
   HotelRepository? _repository;
 
   HotelByIDPresenter(this._view){
-    _repository = Injector().getData();
+    _repository = Injector().handleData();
   }
 
   loadHotelID(String id){

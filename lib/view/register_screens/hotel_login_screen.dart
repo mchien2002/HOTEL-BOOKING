@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hotel_service/data_sources/init.dart';
+import 'package:hotel_service/presenters/register_view_contract.dart';
 import 'package:hotel_service/provider/register_provider.dart';
 import 'package:hotel_service/view/register_screens/otp_register_screen.dart';
-import 'package:hotel_service/data_sources/repositories/register/register_repository_iml.dart';
 import 'package:provider/provider.dart';
 import '../components/global/dialog_window.dart';
 
@@ -15,9 +15,30 @@ class HotelLoginScreen extends StatefulWidget {
   State<HotelLoginScreen> createState() => _HotelLoginScreenState();
 }
 
-class _HotelLoginScreenState extends State<HotelLoginScreen> {
-  final textController = TextEditingController();
+class _HotelLoginScreenState extends State<HotelLoginScreen> implements RegisterViewContract{
+  final textPhoneController = TextEditingController();
   bool canPress = false;
+  RegisterPresenter? _registerPresenter;
+
+  @override
+  onLoadError(String error) {
+    setState(() {
+      DialogWindow(code: error,);
+    });
+  }
+
+  @override
+  onResponseRegister(String response) {
+    setState(() {
+      if (response == "Success"){
+        context.read<RegisterInfoProvider>().updatePhone(textPhoneController.text);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const OTPRegisterScreen())
+        );
+      }
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -59,12 +80,12 @@ class _HotelLoginScreenState extends State<HotelLoginScreen> {
               onKey: (event){
                 if (event is RawKeyDownEvent){
                   if (event.isKeyPressed(LogicalKeyboardKey.enter)){
-                    builPress(context);
+                    builPress(context, textPhoneController.text, false);
                   }
                 }
               },
               child: TextFormField(
-                controller: textController,
+                controller: textPhoneController,
                 onChanged: (text){
                   setState(() {
                     canPress = text.length >= 10;
@@ -91,7 +112,7 @@ class _HotelLoginScreenState extends State<HotelLoginScreen> {
             SizedBox(
               height: 50,
               child: RaisedButton(
-                onPressed: canPress ? () => builPress(context) : null,
+                onPressed: canPress ? () => builPress(context, textPhoneController.text, false) : null,
                 color: colorPrimary,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 child: const Center(
@@ -108,17 +129,8 @@ class _HotelLoginScreenState extends State<HotelLoginScreen> {
     );
   }
 
-  void builPress(BuildContext context) async{
-      String? code = await RegisterRepositoryIml().register(textController.text, false);
-      if (code == "Success"){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const OTPRegisterScreen())
-        );
-        context.read<RegisterInfoProvider>().updatePhone(textController.text);
-      }
-      else{
-        DialogWindow(code: code,);
-      }
-    }
+  void builPress(BuildContext context, String phoneStr, bool resend) async{
+      _registerPresenter = RegisterPresenter(this);
+      _registerPresenter!.postPhoneRequest(phoneStr, resend);
+  }
 }
