@@ -9,7 +9,9 @@ class LoadingScreen extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(20),
-        child: const CircularProgressIndicator()
+        child: const CircularProgressIndicator( 
+          valueColor:  AlwaysStoppedAnimation<Color>(Colors.grey),
+        ),
       )
     );
   }

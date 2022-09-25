@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:hotel_service/presenters/booking_view_contract.dart';
 import 'package:hotel_service/view/components/room/room_booking_field.dart';
 import 'package:hotel_service/view/components/room/room_booking_pay.dart';
 import 'package:hotel_service/view/components/room/room_booking_request.dart';
@@ -12,7 +13,6 @@ import '../../../models/booking_model.dart';
 import '../../../models/room_model.dart';
 import '../../../provider/booking_provider.dart';
 import '../../../provider/search_provider.dart';
-import '../../../data_sources/repositories/hotel/hotel_repository_iml.dart';
 import '../global/dialog_window.dart';
 
 class RoomBookingBody extends StatefulWidget {
@@ -24,9 +24,30 @@ class RoomBookingBody extends StatefulWidget {
   _RoomBookingBodyState createState() => _RoomBookingBodyState();
 }
 
-class _RoomBookingBodyState extends State<RoomBookingBody> {
+class _RoomBookingBodyState extends State<RoomBookingBody> implements BookingViewContract{
   BookingModel bookingRequest = BookingModel();
   DateTime now = DateTime.now();
+  BookingPresenter? _bookingPresenter;
+
+   @override
+  onLoadError(String error) {
+    setState(() {
+      showDialog(
+        context: context, 
+        builder: (context) => DialogWindow(code: error)
+      );
+    });
+  }
+  
+  @override
+  onResponseBooking(String response) {
+    setState(() {
+      showDialog(
+        context: context, 
+        builder: (context) => DialogWindow(code: response)
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,10 +149,7 @@ class _RoomBookingBodyState extends State<RoomBookingBody> {
       ),
       rooms: listRoomBooking,
     );
-    String? message = await HotelRepositoryIml().postBooking(bookingRequest);
-    showDialog(
-      context: context, 
-      builder: (context) => DialogWindow(code: message)
-    );
+    _bookingPresenter = BookingPresenter(this);
+    _bookingPresenter!.postRepestBooking(bookingRequest);
   }
 }

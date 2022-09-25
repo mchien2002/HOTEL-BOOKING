@@ -20,7 +20,6 @@ class SearchHotelScreen extends StatefulWidget {
 class _SearchHotelScreenState extends State<SearchHotelScreen> implements HotelListViewContract{
   bool _isTop = true;
   bool _isLoading = true;
-  bool _isError = false;
   String _errorMessage = '';
   late ScrollController scrollController; 
   List _hotelData = [];
@@ -58,7 +57,6 @@ class _SearchHotelScreenState extends State<SearchHotelScreen> implements HotelL
   @override
   onLoadError(String error) {
     setState(() {
-      _isError = true;
       _errorMessage = error;
       _isLoading = false;
     });
@@ -75,7 +73,7 @@ class _SearchHotelScreenState extends State<SearchHotelScreen> implements HotelL
       },
       child: Scaffold(
         backgroundColor: colorF2F9FE,
-        body: _isError ? ErrorScreen(errorMessage: _errorMessage) : CustomScrollView(
+        body: _errorMessage != '' ? ErrorScreen(errorMessage: _errorMessage) : CustomScrollView(
           controller: scrollController,
           slivers: [
             SearchAppBar(isTop: _isTop,),

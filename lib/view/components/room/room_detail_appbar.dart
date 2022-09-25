@@ -16,6 +16,18 @@ class RoomDetailAppbar extends StatefulWidget {
 }
 
 class _RoomDetailAppbarState extends State<RoomDetailAppbar> {
+  bool _isError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterError.onError = (FlutterErrorDetails detail){
+      setState(() {
+        _isError = true;
+      });
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     // BUILD ROOM BOOKING APP BAR
@@ -38,7 +50,11 @@ class _RoomDetailAppbarState extends State<RoomDetailAppbar> {
       flexibleSpace: FlexibleSpaceBar(
         background: Column(
           children: [
-            Image.network(
+            _isError ? Image.asset(
+              "assets/images/img_error.jpg",
+              height: 350,
+              fit: BoxFit.cover
+            ) : Image.network(
               widget.hotelData.banner!,
               height: 350,
               fit: BoxFit.cover
@@ -140,7 +156,7 @@ class _RoomDetailAppbarState extends State<RoomDetailAppbar> {
         )
       ),
       child: Image(
-        image: NetworkImage(picUrl),
+        image: _isError ? const AssetImage("assets/images/img_error.jpg") as ImageProvider : NetworkImage(picUrl),
         fit: BoxFit.cover,
       ),
     );

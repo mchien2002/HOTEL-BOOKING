@@ -19,6 +19,17 @@ class CardMiniItem extends StatefulWidget {
 
 class _CardMiniItemState extends State<CardMiniItem> {
   final LocalStorageRepositoryIml _localStorageRepository = LocalStorageRepositoryIml();
+  bool _isError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterError.onError = (FlutterErrorDetails detail){
+      setState(() {
+        _isError = true;
+      });
+    };
+  }
    
   @override
   Widget build(BuildContext context) {
@@ -39,7 +50,7 @@ class _CardMiniItemState extends State<CardMiniItem> {
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(widget.hotelData.banner!),
+                      image: _isError ? const AssetImage("assets/images/img_error.jpg") as ImageProvider : NetworkImage(widget.hotelData.banner!),
                       fit: BoxFit.cover
                     )
                   ),

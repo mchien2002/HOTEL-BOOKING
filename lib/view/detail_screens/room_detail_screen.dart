@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:hotel_service/view/system_screens/error_screen.dart';
+import 'package:hotel_service/view/system_screens/loading_screen.dart';
 import '../../models/hotel_data_model.dart';
 import '../../presenters/hotelid_view_contract.dart';
 import '../components/global/more_hotel_widget.dart';
@@ -25,7 +27,6 @@ class RoomDetailScreen extends StatefulWidget {
 class _RoomDetailScreenState extends State<RoomDetailScreen> implements HotelByIDViewContract{
   bool _isLoading = true;
   bool isTop = true;
-  bool _isError = false;
   String _errorMessage = '';
   HotelData _hotelData = HotelData();
   HotelByIDPresenter? _hotelByIDPresenter;
@@ -56,7 +57,6 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> implements HotelByI
   @override
   onLoadError(String error) {
     setState(() {
-      _isError = true;
       _errorMessage = error;
       _isLoading = false;
     });
@@ -78,7 +78,7 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> implements HotelByI
     return DefaultTabController(
       length: 7,
       child: Scaffold(
-        body: CustomScrollView(
+        body: _isLoading ? const LoadingScreen() : _errorMessage != '' ? ErrorScreen(errorMessage: _errorMessage) : CustomScrollView(
           controller: scrollController,
           slivers: [
             RoomDetailAppbar(
