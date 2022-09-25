@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hotel_service/data_sources/init.dart';
 import 'package:hotel_service/presenters/hotelid_view_contract.dart';
 import '../../../models/hotel_data_model.dart';
@@ -114,14 +114,17 @@ class _CardMiniItemState extends State<CardMiniItem> implements HotelByIDViewCon
   }
   // FUNCTION ENFORCEMENT EVENT WHEN WE CLICK
   void cardPress(String hotelID) async{
-    EasyLoading.show();
+    showDialog(
+      context: context, 
+      builder: (context) => const SpinKitThreeInOut(color: colorB2B2B2,)
+    );
     _hotelByIDPresenter = HotelByIDPresenter(this);
     _hotelByIDPresenter?.loadHotelID(hotelID);
   }
   
   @override
   onLoadError(String error) {
-    EasyLoading.dismiss();
+    Navigator.pop(context);
    showDialog(
         context: context, 
         builder: (context) => DialogWindow(code: error)
@@ -130,7 +133,7 @@ class _CardMiniItemState extends State<CardMiniItem> implements HotelByIDViewCon
   
   @override
   onLoadHotelIDComplete(hotelData) {
-    EasyLoading.dismiss();
+    Navigator.pop(context);
     Navigator.push(
       context, 
       MaterialPageRoute(builder: (context) => RoomDetailScreen(hotelData: hotelData,))

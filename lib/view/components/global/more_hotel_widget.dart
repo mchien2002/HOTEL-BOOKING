@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hotel_service/presenters/hotellist_view_contract.dart';
-import 'package:hotel_service/view/system_screens/loading_screen.dart';
 import '../../../data_sources/init.dart';
 import 'card_mini.dart';
 
@@ -45,7 +45,7 @@ class _MoreHotelWidgetState extends State<MoreHotelWidget> implements HotelListV
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? const SliverToBoxAdapter(child: LoadingScreen(),) : SliverGrid(
+    return _isLoading ? const SliverToBoxAdapter(child: SpinKitThreeInOut(color: colorB2B2B2,),) : SliverGrid(
       // BUILD GRID VIEW FOR CARD MINI
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hotel_service/presenters/hotellist_view_contract.dart';
 import 'package:hotel_service/view/system_screens/error_screen.dart';
-import 'package:hotel_service/view/system_screens/loading_screen.dart';
 import 'package:hotel_service/data_sources/init.dart';
 import '../components/search/search_filter_appbar.dart';
 import '../components/search/search_filter_body.dart';
@@ -49,7 +49,7 @@ class _SearchFilterScreenState extends State<SearchFilterScreen> implements Hote
     return _isError ? ErrorScreen(errorMessage: _errorMessage) : Scaffold(
       backgroundColor: colorFFEFE5,
       appBar: SearchFilterAppBar(dataLenght: _hotelData.length),
-      body: _isLoading ? const LoadingScreen() : SearchFilterBody(data: _hotelData),
+      body: _isLoading ? const SpinKitThreeInOut(color: colorB2B2B2,) : SearchFilterBody(data: _hotelData),
     );
   }
 }

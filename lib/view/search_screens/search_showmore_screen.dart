@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, library_private_types_in_public_api
 import  'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hotel_service/view/system_screens/error_screen.dart';
-import 'package:hotel_service/view/system_screens/loading_screen.dart';
 import 'package:hotel_service/data_sources/init.dart';
 import '../../presenters/hotellist_view_contract.dart';
 import '../components/global/card_mini.dart';
@@ -72,7 +72,7 @@ class _SearchShowMoreScreenState extends State<SearchShowMoreScreen> implements 
       ),
       body: _isError ? ErrorScreen(errorMessage: _errorMessage) : Container(
         padding: const EdgeInsets.all(paddingLR),
-        child: _isLoading ? const LoadingScreen() : GridView.builder(
+        child: _isLoading ? const SpinKitThreeInOut(color: colorB2B2B2,) : GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: (itemWidth / itemHeight),
