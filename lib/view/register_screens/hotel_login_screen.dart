@@ -22,22 +22,21 @@ class _HotelLoginScreenState extends State<HotelLoginScreen> implements Register
 
   @override
   onLoadError(String error) {
-    setState(() {
-      DialogWindow(code: error,);
-    });
+    showDialog(
+      context: context, 
+      builder: (context) => DialogWindow(code: error)
+    );
   }
 
   @override
   onResponseRegister(String response) {
-    setState(() {
-      if (response == "Success"){
-        context.read<RegisterInfoProvider>().updatePhone(textPhoneController.text);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const OTPRegisterScreen())
-        );
-      }
-    });
+    if (response == "Success"){
+      context.read<RegisterInfoProvider>().updatePhone(textPhoneController.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const OTPRegisterScreen())
+      );
+    }
   }
   
   @override

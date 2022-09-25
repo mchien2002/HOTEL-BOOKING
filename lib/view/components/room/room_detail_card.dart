@@ -1,11 +1,14 @@
 // ignore_for_file: deprecated_member_use, library_private_types_in_public_api, non_constant_identifier_names
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hotel_service/presenters/hotelid_view_contract.dart';
 import 'package:hotel_service/view/detail_screens/room_booking_screen.dart';
 import 'package:hotel_service/view/detail_screens/room_utilities_screen.dart';
 import '../../../data_sources/init.dart';
 import '../../../models/facilities_model.dart';
 import '../../../models/roomtype_model.dart';
+import '../global/dialog_window.dart';
 
 class RoomCardItem extends StatefulWidget {
   const RoomCardItem({ Key? key, required this.roomTypeData,}) : super(key: key);
@@ -15,8 +18,9 @@ class RoomCardItem extends StatefulWidget {
   _RoomCardItemState createState() => _RoomCardItemState();
 }
 
-class _RoomCardItemState extends State<RoomCardItem> {
+class _RoomCardItemState extends State<RoomCardItem> implements HotelByIDViewContract{
   bool moreBtn = true;
+  HotelByIDPresenter? _hotelByIDPresenter;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +75,7 @@ class _RoomCardItemState extends State<RoomCardItem> {
                 width: 100,
                 height: 40,
                 child: RaisedButton(
-                  onPressed: () => buildPress(RoomBookingScreen(roomTypeData: widget.roomTypeData)),
+                  onPressed: () => switchBookingScreen(),
                   color: color00AC44,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                   child: const Center(child: Text("Đặt ngay", style: TextStyle(color: colorWhite, fontSize: 15),)),
@@ -174,7 +178,7 @@ class _RoomCardItemState extends State<RoomCardItem> {
                   ],
                 ),
                 InkWell(
-                  onTap: () => buildPress(RoomUtilitiesScreen(data: widget.roomTypeData)),
+                  onTap: () => showMoreBtn(),
                   child: const Text("Xem tất cả tiện nghi", style: TextStyle(fontSize: 11, color: colorPrimary))
                 ),
               ],
@@ -185,10 +189,34 @@ class _RoomCardItemState extends State<RoomCardItem> {
     ],);
   }
 
-  void buildPress(screen){
+  switchBookingScreen(){
+    EasyLoading.show();
+    _hotelByIDPresenter = HotelByIDPresenter(this);
+    _hotelByIDPresenter!.loadHotelID(widget.roomTypeData.hotel!);
+  }
+
+  showMoreBtn(){
     Navigator.push(
       context, 
-      MaterialPageRoute(builder: (context) => screen)
+      MaterialPageRoute(builder: (context) => RoomUtilitiesScreen(data: widget.roomTypeData))
+    );
+  }
+  
+ @override
+  onLoadError(String error) {
+    EasyLoading.dismiss();
+    showDialog(
+      context: context, 
+      builder: (context) => DialogWindow(code: error)
+    );
+  }
+  
+  @override
+  onLoadHotelIDComplete(hotelData) {
+    EasyLoading.dismiss();
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => RoomBookingScreen(roomTypeData: widget.roomTypeData, hotelName: hotelData.name,))
     );
   }
 }

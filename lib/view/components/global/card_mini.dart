@@ -1,10 +1,11 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hotel_service/data_sources/init.dart';
-import 'package:hotel_service/data_sources/repositories/local/local_storage_repository_iml.dart';
+import 'package:hotel_service/presenters/hotelid_view_contract.dart';
 import '../../../models/hotel_data_model.dart';
 import '../../detail_screens/room_detail_screen.dart';
+import 'dialog_window.dart';
 
 class CardMiniItem extends StatefulWidget {
   const CardMiniItem({
@@ -17,8 +18,8 @@ class CardMiniItem extends StatefulWidget {
   State<CardMiniItem> createState() => _CardMiniItemState();
 }
 
-class _CardMiniItemState extends State<CardMiniItem> {
-  final LocalStorageRepositoryIml _localStorageRepository = LocalStorageRepositoryIml();
+class _CardMiniItemState extends State<CardMiniItem> implements HotelByIDViewContract{
+  HotelByIDPresenter? _hotelByIDPresenter;
   bool _isError = false;
 
   @override
@@ -41,7 +42,7 @@ class _CardMiniItemState extends State<CardMiniItem> {
       ),
       elevation: 0,
       child: InkWell(
-        onTap: () => cardPress(widget.hotelData),
+        onTap: () => cardPress(widget.hotelData.id!),
         child: Column(
           children: [
             // THIS WIDGET IS BANNER OF CARD
@@ -112,12 +113,27 @@ class _CardMiniItemState extends State<CardMiniItem> {
     );
   }
   // FUNCTION ENFORCEMENT EVENT WHEN WE CLICK
-  void cardPress(HotelData hotelData) async{
-    Box box = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHotel);
-    _localStorageRepository.addData(box, hotelData);
+  void cardPress(String hotelID) async{
+    EasyLoading.show();
+    _hotelByIDPresenter = HotelByIDPresenter(this);
+    _hotelByIDPresenter?.loadHotelID(hotelID);
+  }
+  
+  @override
+  onLoadError(String error) {
+    EasyLoading.dismiss();
+   showDialog(
+        context: context, 
+        builder: (context) => DialogWindow(code: error)
+      );
+  }
+  
+  @override
+  onLoadHotelIDComplete(hotelData) {
+    EasyLoading.dismiss();
     Navigator.push(
       context, 
-      MaterialPageRoute(builder: (context) => RoomDetailScreen(idHotel: widget.hotelData.id!,))
+      MaterialPageRoute(builder: (context) => RoomDetailScreen(hotelData: hotelData,))
     );
   }
 }

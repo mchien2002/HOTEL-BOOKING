@@ -5,7 +5,6 @@ import 'package:hotel_service/view/components/room/room_booking_field.dart';
 import 'package:hotel_service/view/components/room/room_booking_pay.dart';
 import 'package:hotel_service/view/components/room/room_booking_request.dart';
 import 'package:hotel_service/view/components/room/room_other_requirements.dart';
-import 'package:hotel_service/models/hotel_data_model.dart';
 import 'package:hotel_service/models/roomtype_model.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
@@ -16,9 +15,9 @@ import '../../../provider/search_provider.dart';
 import '../global/dialog_window.dart';
 
 class RoomBookingBody extends StatefulWidget {
-  const RoomBookingBody({ Key? key, required this.roomTypeData, required this.hotelData }) : super(key: key);
+  const RoomBookingBody({ Key? key, required this.roomTypeData, required this.hotelName }) : super(key: key);
   final RoomType roomTypeData;
-  final HotelData hotelData;
+  final String hotelName;
   
   @override
   _RoomBookingBodyState createState() => _RoomBookingBodyState();
@@ -65,7 +64,7 @@ class _RoomBookingBodyState extends State<RoomBookingBody> implements BookingVie
           RoomOtherRequirements(textEditingController: context.watch<BookingProvider>().textRequirements,),
           RoomBookingRequest(
             roomType: widget.roomTypeData, 
-            hotelData: widget.hotelData,
+            hotelName: widget.hotelName,
           ),
           RoomBookingPay(roomType: widget.roomTypeData,),
           SizedBox(

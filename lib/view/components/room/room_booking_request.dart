@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:hotel_service/data_sources/init.dart';
-import 'package:hotel_service/models/hotel_data_model.dart';
 import 'package:hotel_service/models/roomtype_model.dart';
 import 'package:hotel_service/provider/search_provider.dart';
 import 'package:provider/provider.dart';
@@ -9,9 +8,9 @@ import '../global/title.dart';
 
 class RoomBookingRequest extends StatefulWidget {
   const RoomBookingRequest({
-    Key? key, required this.hotelData, required this.roomType,
+    Key? key, required this.hotelName, required this.roomType,
   }) : super(key: key);
-  final HotelData hotelData;
+  final String hotelName;
   final RoomType roomType;
 
   @override
@@ -29,7 +28,7 @@ class _RoomBookingRequestState extends State<RoomBookingRequest> {
       children: [
         const TitleWidget(title: "Yêu cầu đặt phòng"),
         Text(
-          widget.hotelData.name!, 
+          widget.hotelName, 
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
         TimeBooking(),

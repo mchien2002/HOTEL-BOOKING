@@ -24,30 +24,26 @@ class _OTPRegisterCodeState extends State<OTPRegisterCode> implements RegisterVi
 
   @override
   onLoadError(String error) {
-    setState(() {
-      showDialog(
-        context: context, 
-        builder: (context) => DialogWindow(code: error)
-      );
-    });
+    showDialog(
+      context: context, 
+      builder: (context) => DialogWindow(code: error)
+    );
   }
   
   @override
   onResponseRegister(String response) {
-    setState(() {
-      if (response == "Success"){
-        Navigator.push(
-          context, 
-          MaterialPageRoute(builder: (context) => const SearchHotelScreen())
-        );
-      }
-      else{
-        showDialog(
-          context: context, 
-          builder: (context) => DialogWindow(code: response)
-        );
-      }
-    });
+    if (response == "Success"){
+      Navigator.push(
+        context, 
+        MaterialPageRoute(builder: (context) => const SearchHotelScreen())
+      );
+    }
+    else{
+      showDialog(
+        context: context, 
+        builder: (context) => DialogWindow(code: response)
+      );
+    }
   }
 
   @override

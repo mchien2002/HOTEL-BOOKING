@@ -36,7 +36,6 @@ class LocalStorageRepositoryIml implements BaseLocalStorageRepository{
 
   @override
   Future addRoomTypeData(Box box, List<RoomType> roomType) {
-    // TODO: implement addRoomTypeData
     throw UnimplementedError();
   }
   

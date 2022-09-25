@@ -1,9 +1,6 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:hotel_service/view/system_screens/error_screen.dart';
-import 'package:hotel_service/view/system_screens/loading_screen.dart';
 import '../../models/hotel_data_model.dart';
-import '../../presenters/hotelid_view_contract.dart';
 import '../components/global/more_hotel_widget.dart';
 import '../components/global/title.dart';
 import '../components/room/room_detail_appbar.dart';
@@ -16,20 +13,16 @@ import '../components/room/room_detail_support.dart';
 import '../../data_sources/init.dart';
 
 class RoomDetailScreen extends StatefulWidget {
-  const RoomDetailScreen({ Key? key, required this.idHotel}) : super(key: key);
-  final String idHotel;
+  const RoomDetailScreen({ Key? key, required this.hotelData}) : super(key: key);
+  final HotelData hotelData;
 
   @override
   // ignore: library_private_types_in_public_api
   _RoomDetailScreenState createState() => _RoomDetailScreenState();
 }
 
-class _RoomDetailScreenState extends State<RoomDetailScreen> implements HotelByIDViewContract{
-  bool _isLoading = true;
+class _RoomDetailScreenState extends State<RoomDetailScreen>{
   bool isTop = true;
-  String _errorMessage = '';
-  HotelData _hotelData = HotelData();
-  HotelByIDPresenter? _hotelByIDPresenter;
   late ScrollController scrollController;
   final dataKey = List.generate(7, (index) => GlobalKey());
 
@@ -50,24 +43,6 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> implements HotelByI
         }
     });      
     super.initState();
-    _hotelByIDPresenter = HotelByIDPresenter(this);
-    _hotelByIDPresenter!.loadHotelID(widget.idHotel);
-  }
-
-  @override
-  onLoadError(String error) {
-    setState(() {
-      _errorMessage = error;
-      _isLoading = false;
-    });
-  }
-
-  @override
-  onLoadHotelIDComplete(hotelData) {
-    setState(() {
-      _hotelData = hotelData;
-      _isLoading = false;
-    });
   }
 
   @override
@@ -78,12 +53,12 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> implements HotelByI
     return DefaultTabController(
       length: 7,
       child: Scaffold(
-        body: _isLoading ? const LoadingScreen() : _errorMessage != '' ? ErrorScreen(errorMessage: _errorMessage) : CustomScrollView(
+        body: CustomScrollView(
           controller: scrollController,
           slivers: [
             RoomDetailAppbar(
               isTop: isTop, 
-              hotelData: _hotelData, 
+              hotelData: widget.hotelData, 
               listDataKey: dataKey,
             ),
             SliverToBoxAdapter(
@@ -95,8 +70,8 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> implements HotelByI
                   children: [
                     RoomDetailOverview(
                       key: dataKey[0],
-                      hotelData: _hotelData, 
-                      listRoomData: _hotelData.roomTypes!, 
+                      hotelData: widget.hotelData, 
+                      listRoomData: widget.hotelData.roomTypes!, 
                     ),
                     TitleWidget(
                       key: dataKey[1],
@@ -122,8 +97,8 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> implements HotelByI
                     ),
                     Column(
                       children: List.generate(
-                        _hotelData.roomTypes!.length, 
-                        (index) => RoomCardItem(roomTypeData: _hotelData.roomTypes![index],)
+                        widget.hotelData.roomTypes!.length, 
+                        (index) => RoomCardItem(roomTypeData: widget.hotelData.roomTypes![index],)
                       ),
                     ),
                     TitleWidget(

@@ -1,10 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hotel_service/data_sources/init.dart';
+import 'package:hotel_service/presenters/hotelid_view_contract.dart';
+import 'package:hotel_service/view/components/global/dialog_window.dart';
 import 'package:hotel_service/view/detail_screens/room_detail_screen.dart';
-import 'package:hotel_service/data_sources/repositories/local/local_storage_repository_iml.dart';
-
 import '../../../models/hotel_data_model.dart';
 
 class CardLarge extends StatefulWidget {
@@ -18,8 +18,8 @@ class CardLarge extends StatefulWidget {
   State<CardLarge> createState() => _CardLargeState();
 }
 
-class _CardLargeState extends State<CardLarge> {
-  final LocalStorageRepositoryIml _localStorageRepository = LocalStorageRepositoryIml();
+class _CardLargeState extends State<CardLarge> implements HotelByIDViewContract{
+  HotelByIDPresenter? _hotelByIDPresenter;
   bool _isError = false;
 
   @override
@@ -45,7 +45,7 @@ class _CardLargeState extends State<CardLarge> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: InkWell(
-          onTap: () => cardPress(context, widget.hotelData),
+          onTap: () => cardPress(widget.hotelData.id!),
           child: Column(
             children: [
               // THIS WIDGET IS BANNER OF HOTEL
@@ -137,14 +137,28 @@ class _CardLargeState extends State<CardLarge> {
     );
   }
   // FUNCTION ENFORCEMENT EVENT WHEN WE CLICK
-  void cardPress(BuildContext context, hotelData) async{
-    Box box = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHotel);
-    _localStorageRepository.addData(box, hotelData);
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => RoomDetailScreen(idHotel: hotelData.id,))
+  void cardPress(String hotelID) async{
+    EasyLoading.show();
+    _hotelByIDPresenter = HotelByIDPresenter(this);
+    _hotelByIDPresenter?.loadHotelID(hotelID);
+  }
+  
+  @override
+  onLoadError(String error) {
+    EasyLoading.dismiss();
+    showDialog(
+      context: context, 
+      builder: (context) => DialogWindow(code: error)
     );
   }
-
+  
+  @override
+  onLoadHotelIDComplete(hotelData) {
+    EasyLoading.dismiss();
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => RoomDetailScreen(hotelData: hotelData,))
+    );
+  }
 }
 
