@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:hotel_service/view/components/global/dialog_window.dart';
 import 'package:hotel_service/view/register_screens/otp_register_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
+import '../../../presenters/register_view_contract.dart';
 import '../../../provider/register_provider.dart';
 import '../../register_screens/hotel_login_screen.dart';
 
@@ -16,7 +18,9 @@ class OTPRegisterButton extends StatefulWidget {
   State<OTPRegisterButton> createState() => _OTPRegisterButtonState();
 }
 
-class _OTPRegisterButtonState extends State<OTPRegisterButton> {
+class _OTPRegisterButtonState extends State<OTPRegisterButton> implements RegisterViewContract{
+  RegisterPresenter? _registerPresenter;
+
   @override
   Widget build(BuildContext context) {
     // BUILD BUTTON FOR REGISTER SCREEN
@@ -24,10 +28,7 @@ class _OTPRegisterButtonState extends State<OTPRegisterButton> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         InkWell(
-          onTap: () {
-            context.read<RegisterInfoProvider>().returnLogin(widget.timer);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const OTPRegisterScreen()));
-          },
+          onTap: () => btnResendCode(context),
           child: Container(
             height: 40,
             width: 120,
@@ -56,6 +57,26 @@ class _OTPRegisterButtonState extends State<OTPRegisterButton> {
         ),
       ],
     );
+  }
+
+  btnResendCode(BuildContext context){
+    _registerPresenter = RegisterPresenter(this);
+    _registerPresenter!.postPhoneRequest(context.read<RegisterInfoProvider>().phone, false);
+    
+  }
+  
+  @override
+  onLoadError(String error) {
+    showDialog(
+      context: context, 
+      builder: (context) => DialogWindow(code: error)
+    );
+  }
+  
+  @override
+  onResponseRegister(String response) {
+    context.read<RegisterInfoProvider>().returnLogin(widget.timer);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const OTPRegisterScreen()));
   }
 }
 
