@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/data_sources/init.dart';
 import 'package:hotel_service/presenters/hotelid_view_contract.dart';
+import '../../../data_sources/routes.dart';
 import '../../../models/hotel_data_model.dart';
 import '../../detail_screens/room_detail_screen.dart';
 import 'dialog_window.dart';
@@ -124,19 +126,19 @@ class _CardMiniItemState extends State<CardMiniItem> implements HotelByIDViewCon
   
   @override
   onLoadError(String error) {
-    Navigator.pop(context);
-   showDialog(
-        context: context, 
-        builder: (context) => DialogWindow(code: error)
-      );
+    Get.back();
+    showDialog(
+      context: context, 
+      builder: (context) => DialogWindow(code: error)
+    );
   }
   
   @override
   onLoadHotelIDComplete(hotelData) {
-    Navigator.pop(context);
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => RoomDetailScreen(hotelData: hotelData,))
+    Get.back();
+    Get.toNamed(
+      RoutesClass.getHotelDetailRoute(hotelData.id),
+      arguments: RoomDetailScreen(hotelData: hotelData)
     );
   }
 }

@@ -66,7 +66,7 @@ class _RoomBookingBodyState extends State<RoomBookingBody> implements BookingVie
             roomType: widget.roomTypeData, 
             hotelName: widget.hotelName,
           ),
-          RoomBookingPay(roomType: widget.roomTypeData,),
+          RoomBookingPay(roomTypeData: widget.roomTypeData,),
           SizedBox(
             height: 50,
             child: RaisedButton(

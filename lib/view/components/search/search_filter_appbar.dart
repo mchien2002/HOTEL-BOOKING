@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/view/search_screens/research_component_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
@@ -15,11 +17,11 @@ class SearchFilterAppBar extends StatelessWidget implements PreferredSizeWidget{
   Widget build(BuildContext context) {
     // BUILD SEARCH FILTER APP BAR
     return AppBar(
-      elevation: 0,
+        elevation: 0,
       titleSpacing: 0,
       leading: IconButton(
         icon: Image.asset("assets/images/ic_icon_back.png"),
-        onPressed: () => Navigator.popUntil(context, (route) => route.isFirst)
+        onPressed: () => Get.until((route) => Get.currentRoute == RoutesClass.search)
       ),
       actions: [
         IconButton(

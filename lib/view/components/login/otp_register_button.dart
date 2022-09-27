@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/view/components/global/dialog_window.dart';
-import 'package:hotel_service/view/register_screens/otp_register_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
 import '../../../presenters/register_view_contract.dart';
 import '../../../provider/register_provider.dart';
-import '../../register_screens/hotel_login_screen.dart';
 
 class OTPRegisterButton extends StatefulWidget {
   const OTPRegisterButton({
@@ -48,7 +48,7 @@ class _OTPRegisterButtonState extends State<OTPRegisterButton> implements Regist
         InkWell(
           onTap: () {
             widget.timer.cancel();
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const HotelLoginScreen()));
+            Get.back();
           },
           child: const Text(
             "Đổi số điện thọai",
@@ -76,7 +76,7 @@ class _OTPRegisterButtonState extends State<OTPRegisterButton> implements Regist
   @override
   onResponseRegister(String response) {
     context.read<RegisterInfoProvider>().returnLogin(widget.timer);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const OTPRegisterScreen()));
+    Get.offAndToNamed(RoutesClass.getConfirmOTPRoute(context.read<RegisterInfoProvider>().phone));
   }
 }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/data_sources/init.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/view/register_screens/hotel_login_screen.dart';
 import 'package:hotel_service/view/search_screens/search_hotel_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,11 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigaToHome(){
     Future.delayed(const Duration(seconds: 5),(){
-      Navigator.pushReplacement(
-        context, 
-        MaterialPageRoute(
-          builder: (context) => login ? const SearchHotelScreen() : const HotelLoginScreen())
-        );
+      Get.toNamed(login ? RoutesClass.getSearchHomeRoute() : RoutesClass.getLoginRoute());
     });
   }
 

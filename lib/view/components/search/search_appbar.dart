@@ -36,7 +36,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
           icon: Image.asset(
             "assets/images/img_icon_logout.png", 
             scale: 1.5, 
-            color: colorWhite,
+            color:  widget.isTop ? colorWhite : colorB2B2B2,
           )
         )
       ],

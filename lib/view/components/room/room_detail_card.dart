@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/presenters/hotelid_view_contract.dart';
 import 'package:hotel_service/view/detail_screens/room_booking_screen.dart';
 import 'package:hotel_service/view/detail_screens/room_utilities_screen.dart';
@@ -178,7 +180,7 @@ class _RoomCardItemState extends State<RoomCardItem> implements HotelByIDViewCon
                   ],
                 ),
                 InkWell(
-                  onTap: () => showMoreBtn(),
+                  onTap: () => showUtilitiesBtn(),
                   child: const Text("Xem tất cả tiện nghi", style: TextStyle(fontSize: 11, color: colorPrimary))
                 ),
               ],
@@ -190,23 +192,24 @@ class _RoomCardItemState extends State<RoomCardItem> implements HotelByIDViewCon
   }
 
   switchBookingScreen(){
-  showDialog(
-    context: context, 
-    builder: (context) => const SpinKitThreeInOut(color: colorB2B2B2,)
-  );    _hotelByIDPresenter = HotelByIDPresenter(this);
+    showDialog(
+      context: context, 
+      builder: (context) => const SpinKitThreeInOut(color: colorB2B2B2,)
+    );    
+    _hotelByIDPresenter = HotelByIDPresenter(this);
     _hotelByIDPresenter!.loadHotelID(widget.roomTypeData.hotel!);
   }
 
-  showMoreBtn(){
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => RoomUtilitiesScreen(data: widget.roomTypeData))
+  showUtilitiesBtn(){
+    Get.toNamed(
+      RoutesClass.getUtilitiesRoute(widget.roomTypeData.id!),
+      arguments: RoomUtilitiesScreen(data: widget.roomTypeData)
     );
   }
   
  @override
   onLoadError(String error) {
-  Navigator.pop(context);
+    Get.back();
     showDialog(
       context: context, 
       builder: (context) => DialogWindow(code: error)
@@ -215,10 +218,10 @@ class _RoomCardItemState extends State<RoomCardItem> implements HotelByIDViewCon
   
   @override
   onLoadHotelIDComplete(hotelData) {
-  Navigator.pop(context);
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => RoomBookingScreen(roomTypeData: widget.roomTypeData, hotelName: hotelData.name,))
+    Get.back();
+    Get.toNamed(
+      RoutesClass.getRoomBookingRoute(hotelData.id),
+      arguments: RoomBookingScreen(roomTypeData: widget.roomTypeData, hotelName: hotelData.name)
     );
   }
 }

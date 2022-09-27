@@ -1,15 +1,17 @@
 // ignore_for_file: non_constant_identifier_names, deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/models/roomtype_model.dart';
 import 'package:hotel_service/view/detail_screens/room_utilities_screen.dart';
 import '../../../data_sources/init.dart';
+import '../../../data_sources/routes.dart';
 import '../global/title.dart';
 
 class RoomBookingPay extends StatefulWidget {
   const RoomBookingPay({
-    Key? key, required this.roomType,
+    Key? key, required this.roomTypeData,
   }) : super(key: key);
-  final RoomType roomType;
+  final RoomType roomTypeData;
 
   @override
   State<RoomBookingPay> createState() => _RoomBookingPayState();
@@ -25,12 +27,12 @@ class _RoomBookingPayState extends State<RoomBookingPay> {
         const TitleWidget(title: "Tóm tắt thanh toán"),
         const Text("2 đêm (Thứ 4 18/07 - Thứ 5 20/07)"),
         const SizedBox(height: 20,),
-        PriceWidget("Giá phòng / đêm", widget.roomType.rooms![0].price!.nightlyPrice!),
-        PriceWidget("Tạm tính", widget.roomType.rooms![0].price!.nightlyPrice!, 2),
+        PriceWidget("Giá phòng / đêm", widget.roomTypeData.rooms![0].price!.nightlyPrice!),
+        PriceWidget("Tạm tính", widget.roomTypeData.rooms![0].price!.nightlyPrice!, 2),
         VoucherWidget(),
         const SizedBox(height: 20,),
         PriceWidget("Mã ưu đãi", 100000),
-        PriceWidget("Tổng cộng", widget.roomType.rooms![0].price!.nightlyPrice!, 2, 100000, true),
+        PriceWidget("Tổng cộng", widget.roomTypeData.rooms![0].price!.nightlyPrice!, 2, 100000, true),
         ContentBottom(),
         const SizedBox(height: 20,),
       ],
@@ -48,9 +50,9 @@ class _RoomBookingPayState extends State<RoomBookingPay> {
               style: TextStyle(color: color777777, fontSize: 10, height: 2),
             ),
             InkWell(
-              onTap: () => Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (context) => RoomUtilitiesScreen(data: widget.roomType))
+              onTap: () => Get.toNamed(
+                RoutesClass.getUtilitiesRoute(widget.roomTypeData.id!),
+                arguments: RoomUtilitiesScreen(data: widget.roomTypeData)
               ),
               child: const Text(
                 "Xem chi tiết phòng", 
@@ -117,7 +119,7 @@ class _RoomBookingPayState extends State<RoomBookingPay> {
               style: total ? const TextStyle(fontWeight: FontWeight.w500, fontSize: 20) : null,
             ),
             Text(
-              "${oCcy.format(price * night - voucher).toString().replaceAll(',', ' ')} ${widget.roomType.rooms![0].price!.currencyCode}",
+              "${oCcy.format(price * night - voucher).toString().replaceAll(',', ' ')} ${widget.roomTypeData.rooms![0].price!.currencyCode}",
               style: total ? const TextStyle(color: colorFF6F15, fontSize: 20) : null,
             ),
           ],

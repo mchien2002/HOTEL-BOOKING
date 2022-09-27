@@ -1,8 +1,9 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/provider/search_provider.dart';
 import 'package:hotel_service/data_sources/init.dart';
-import 'package:hotel_service/view/search_screens/search_filter_screen.dart';
 import 'package:hotel_service/view/search_screens/search_location_screen.dart';
 import 'package:hotel_service/view/search_screens/search_quantity_screen.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class SearchComponent extends StatefulWidget {
 class _SearchComponentState extends State<SearchComponent> {
   @override
   Widget build(BuildContext context) {
+    var searchProvider = context.watch<SearchProvider>();
     return Container(
       padding: const EdgeInsets.only(left: 25, top: 20, right: 25, bottom: 20),
       decoration: BoxDecoration(
@@ -30,21 +32,15 @@ class _SearchComponentState extends State<SearchComponent> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            TextBoxFieldSearch("Bạn muốn nghỉ dưỡng ở đâu?", context.watch<SearchProvider>().location, const SearchLocationScreen(), const Icon(Icons.location_on)),
+            TextBoxFieldSearch("Bạn muốn nghỉ dưỡng ở đâu?", searchProvider.location, const SearchLocationScreen(), const Icon(Icons.location_on)),
             const DateTimeBooking(),
-            TextBoxFieldSearch("Số phòng", "${context.watch<SearchProvider>().rooms[0]} Người lớn - ${context.watch<SearchProvider>().rooms[1]} Phòng - ${context.watch<SearchProvider>().rooms[2]} Trẻ em", const SearchQuantityScreen(), const Icon(Icons.home)),
+            TextBoxFieldSearch("Số phòng", "${searchProvider.rooms[0]} Người lớn - ${searchProvider.rooms[1]} Phòng - ${searchProvider.rooms[2]} Trẻ em", const SearchQuantityScreen(), const Icon(Icons.home)),
             const SizedBox(height: 20,),
-
             SizedBox(
               width: 300,
               height: 50,
               child: RaisedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (context) => const SearchFilterScreen())
-                  );
-                },
+                onPressed: () => Get.toNamed(RoutesClass.getSearchFilterRoute(searchProvider.location, searchProvider.rooms[0].toString())),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 padding: const EdgeInsets.all(0.0),
                 child: Ink(
@@ -125,12 +121,13 @@ class DateTimeBooking extends StatefulWidget {
 
 class _DateTimeBookingState extends State<DateTimeBooking> {
 
-  String getTextDateTimeRange(BuildContext context){
-    return "${context.watch<SearchProvider>().dateTimeRange.start.day}/${context.watch<SearchProvider>().dateTimeRange.start.month}/${context.watch<SearchProvider>().dateTimeRange.start.year} - ${context.watch<SearchProvider>().dateTimeRange.end.day}/${context.watch<SearchProvider>().dateTimeRange.end.month}/${context.watch<SearchProvider>().dateTimeRange.end.year}";
+  String getTextDateTimeRange(searchProvider){
+    return "${searchProvider.dateTimeRange.start.day}/${searchProvider.dateTimeRange.start.month}/${searchProvider.dateTimeRange.start.year} - ${searchProvider.dateTimeRange.end.day}/${searchProvider.dateTimeRange.end.month}/${searchProvider.dateTimeRange.end.year}";
   }
   
   @override
   Widget build(BuildContext context) {
+    var searchProvider = context.watch<SearchProvider>();
     return Column(
       children: [
         Row(
@@ -156,7 +153,7 @@ class _DateTimeBookingState extends State<DateTimeBooking> {
               borderRadius: BorderRadius.circular(5.0),
             ),
             prefixIcon: const Icon(Icons.calendar_month),
-            hintText: getTextDateTimeRange(context),
+            hintText: getTextDateTimeRange(searchProvider),
             hintStyle: const TextStyle(color: Colors.black, fontSize: 13),
             ),
           ),

@@ -1,12 +1,13 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names, use_build_context_synchronously
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/data_sources/init.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/presenters/register_view_contract.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import '../../../provider/register_provider.dart';
-import '../../search_screens/search_hotel_screen.dart';
 import '../global/dialog_window.dart';
 
 class OTPRegisterCode extends StatefulWidget {
@@ -33,10 +34,7 @@ class _OTPRegisterCodeState extends State<OTPRegisterCode> implements RegisterVi
   @override
   onResponseRegister(String response) {
     if (response == "Success"){
-      Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (context) => const SearchHotelScreen())
-      );
+      Get.toNamed(RoutesClass.getSearchHomeRoute());
     }
     else{
       showDialog(

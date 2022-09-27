@@ -1,10 +1,11 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/data_sources/init.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/presenters/register_view_contract.dart';
 import 'package:hotel_service/provider/register_provider.dart';
-import 'package:hotel_service/view/register_screens/otp_register_screen.dart';
 import 'package:provider/provider.dart';
 import '../components/global/dialog_window.dart';
 
@@ -32,10 +33,7 @@ class _HotelLoginScreenState extends State<HotelLoginScreen> implements Register
   onResponseRegister(String response) {
     if (response == "Success"){
       context.read<RegisterInfoProvider>().updatePhone(textPhoneController.text);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const OTPRegisterScreen())
-      );
+      Get.toNamed(RoutesClass.getConfirmOTPRoute(textPhoneController.text));
     }
   }
   
@@ -79,7 +77,7 @@ class _HotelLoginScreenState extends State<HotelLoginScreen> implements Register
               onKey: (event){
                 if (event is RawKeyDownEvent){
                   if (event.isKeyPressed(LogicalKeyboardKey.enter)){
-                    builPress(context, textPhoneController.text, false);
+                    builPress(textPhoneController.text, false);
                   }
                 }
               },
@@ -111,7 +109,7 @@ class _HotelLoginScreenState extends State<HotelLoginScreen> implements Register
             SizedBox(
               height: 50,
               child: RaisedButton(
-                onPressed: canPress ? () => builPress(context, textPhoneController.text, false) : null,
+                onPressed: canPress ? () => builPress(textPhoneController.text, false) : null,
                 color: colorPrimary,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 child: const Center(
@@ -128,7 +126,7 @@ class _HotelLoginScreenState extends State<HotelLoginScreen> implements Register
     );
   }
 
-  void builPress(BuildContext context, String phoneStr, bool resend) async{
+  void builPress(String phoneStr, bool resend) async{
       _registerPresenter = RegisterPresenter(this);
       _registerPresenter!.postPhoneRequest(phoneStr, resend);
   }
