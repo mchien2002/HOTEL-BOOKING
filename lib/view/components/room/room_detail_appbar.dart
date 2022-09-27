@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/models/hotel_data_model.dart';
 import '../../../data_sources/init.dart';
 
@@ -38,7 +39,7 @@ class _RoomDetailAppbarState extends State<RoomDetailAppbar> {
       expandedHeight: 350 * (1.2),
       leading: IconButton(
         onPressed: (){
-          Navigator.pop(context);
+          Get.back();
         },
         icon: Image.asset("assets/images/img_back.png", color: widget.isTop ? colorWhite : colorB2B2B2, scale: 1.6,)
       ),

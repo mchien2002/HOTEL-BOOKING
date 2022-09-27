@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/provider/search_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
@@ -79,6 +80,6 @@ class _SearchLocationBodyState extends State<SearchLocationBody> {
 
   void buildPress(BuildContext context, String checkStr){
     context.read<SearchProvider>().updateLocation(checkStr);
-    Navigator.pop(context);
+    Get.back();
   }
 }

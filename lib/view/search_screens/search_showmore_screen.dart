@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, library_private_types_in_public_api
 import  'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/view/system_screens/error_screen.dart';
 import 'package:hotel_service/data_sources/init.dart';
 import '../../presenters/hotellist_view_contract.dart';
@@ -61,9 +62,7 @@ class _SearchShowMoreScreenState extends State<SearchShowMoreScreen> implements 
           style: const TextStyle(color: Colors.black),
         ),
         leading: IconButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
+          onPressed: () => Get.back(),
           icon: Image.asset(
             "assets/images/img_back.png", 
             scale: 2,

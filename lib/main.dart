@@ -15,7 +15,6 @@ import 'package:hotel_service/models/roomtype_model.dart';
 import 'package:hotel_service/provider/booking_provider.dart';
 import 'package:hotel_service/provider/register_provider.dart';
 import 'package:hotel_service/provider/search_provider.dart';
-import 'package:hotel_service/view/system_screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 void main() async{
   // ĐỔI MÀU STATUS BAR

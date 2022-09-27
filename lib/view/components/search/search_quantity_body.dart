@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/provider/search_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
@@ -33,7 +34,7 @@ class _SearchQuantityBodyState extends State<SearchQuantityBody> {
             height: 50,
             // ignore: deprecated_member_use
             child: RaisedButton(
-              onPressed: () => sendQuantity(),
+              onPressed: () => Get.back(),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
               padding: const EdgeInsets.all(0.0),
               child: Ink(
@@ -100,10 +101,6 @@ class _SearchQuantityBodyState extends State<SearchQuantityBody> {
     else if (value == "Trẻ Em"){
       context.read<SearchProvider>().updateChild(flag);
     }
-  }
-
-  void sendQuantity(){    
-    Navigator.pop(context);
   }
 }
 

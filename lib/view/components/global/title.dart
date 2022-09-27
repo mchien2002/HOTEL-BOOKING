@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hotel_service/data_sources/init.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/view/search_screens/search_showmore_screen.dart';
 
 class TitleWidget extends StatefulWidget {
@@ -42,9 +44,9 @@ class _TitleWidgetState extends State<TitleWidget> {
   }
   // FUNCTION ENFORCEMENT EVENT WHEN WE CLICK
   void buildPress(String title){
-    Navigator.push(
-      context, 
-      MaterialPageRoute(builder: (context) => SearchShowMoreScreen(title: title))
+    Get.toNamed(
+      RoutesClass.getSearchShowMoreRoute(),
+      arguments: SearchShowMoreScreen(title: title)
     );
   }
 }

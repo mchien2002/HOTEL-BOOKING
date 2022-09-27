@@ -47,10 +47,22 @@ class HotelRepositoryIml implements HotelRepository, RoomTypeRepository, Booking
   }
 
   @override
+  Future setDataLocal() async{
+    Box boxHotel = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHotel);
+    Box boxHotelID = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHodelDetail);
+    List<HotelData> hotelsListModel = await fetchHotelList();
+    for (HotelData item in hotelsListModel){
+      _localStorageRepository.addData(boxHotel, item);
+      HotelData? hotelTemp = await fetchHotelByID(item.id!);
+      _localStorageRepository.addData(boxHotelID, hotelTemp!);
+    }
+  }
+
+  @override
   Future fetchHotelList() async{
     SharedPreferences storage = await SharedPreferences.getInstance();
     Box boxHotel = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHotel);
-    Box boxHotelID = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHodelDetail);
+    // Box boxHotelID = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHodelDetail);
     setToken(storage.getString('data')!);
     try{
       Response response = await _dio.get(
@@ -62,11 +74,6 @@ class HotelRepositoryIml implements HotelRepository, RoomTypeRepository, Booking
       );
       if (response.statusCode == 200){
         List<HotelData>? hotelsListModel = HotelsListModel.fromJson(response.data).data;
-        for (HotelData item in hotelsListModel!){
-          _localStorageRepository.addData(boxHotel, item);
-          HotelData? hotelTemp = await fetchHotelByID(item.id!);
-          _localStorageRepository.addData(boxHotelID, hotelTemp!);
-        }
         return hotelsListModel;
       }
     }
@@ -82,7 +89,7 @@ class HotelRepositoryIml implements HotelRepository, RoomTypeRepository, Booking
   }
 
   @override
-  Future getRoomList(String idHotel) async {
+  Future fetchRoomList(String idHotel) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     setToken(storage.getString('data')!);
     try{
@@ -121,7 +128,6 @@ class HotelRepositoryIml implements HotelRepository, RoomTypeRepository, Booking
       );
       if (response.statusCode == 200){
         HotelData hotelByID = HotelByID.fromJson(response.data).data!;
-        _localStorageRepository.addData(box, hotelByID);
         return hotelByID;
       }
     }

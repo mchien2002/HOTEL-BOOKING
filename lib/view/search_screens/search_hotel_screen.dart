@@ -43,6 +43,7 @@ class _SearchHotelScreenState extends State<SearchHotelScreen> implements HotelL
     });
     _hotelListPresenter = HotelListPresenter(this);
     _hotelListPresenter!.loadHotelList();
+    _hotelListPresenter!.setDataLocal();
     super.initState();
   }
 

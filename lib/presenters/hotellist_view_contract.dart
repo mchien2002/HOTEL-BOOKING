@@ -18,8 +18,14 @@ class HotelListPresenter{
   loadHotelList(){
     assert(_view != null && _repository != null);
     _repository!
-        .fetchHotelList()
-        .then((contacts) => _view!.onLoadHotelComplete(contacts))
-        .catchError((onError) => _view!.onLoadError(onError.toString()));
+      .fetchHotelList()
+      .then((contacts) => _view!.onLoadHotelComplete(contacts))
+      .catchError((onError) => _view!.onLoadError(onError.toString())
+    );
+  }
+
+  setDataLocal(){
+    assert(_view != null && _repository != null);
+    _repository!.setDataLocal();
   }
 }

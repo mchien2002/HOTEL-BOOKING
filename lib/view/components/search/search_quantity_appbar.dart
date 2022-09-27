@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../data_sources/init.dart';
 
 class SearchQuantityAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -19,9 +20,7 @@ class SearchQuantityAppBar extends StatelessWidget implements PreferredSizeWidge
         style: TextStyle(color: Colors.black),
       ), 
       leading: IconButton(
-        onPressed: (){
-          Navigator.pop(context);
-        },
+        onPressed: () => Get.back(),
         icon: const Icon(
           Icons.close_outlined, 
           color: Colors.black, size: 30,

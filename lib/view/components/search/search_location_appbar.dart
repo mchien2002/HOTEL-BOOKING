@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'search_box.dart';
 import '../../../data_sources/init.dart';
 
@@ -15,9 +16,7 @@ class SearchLocationAppBar extends StatelessWidget implements PreferredSizeWidge
       titleSpacing: 0,
       toolbarHeight: 50,
       leading: InkWell(
-        onTap: (){
-          Navigator.pop(context);
-        },
+        onTap: () => Get.back(),
         child: SizedBox(
           width: 100,
           child: Image.asset(

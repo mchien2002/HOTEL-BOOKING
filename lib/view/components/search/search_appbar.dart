@@ -1,9 +1,10 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/view/components/search/search_component.dart';
 import 'package:hotel_service/data_sources/init.dart';
-import 'package:hotel_service/view/register_screens/hotel_login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data_sources/repositories/local/local_storage_repository_iml.dart';
@@ -90,10 +91,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
     Box box2 = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHodelDetail);
     _localStorageRepository.clearWishList(box1);
     _localStorageRepository.clearWishList(box2);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const HotelLoginScreen())
-    );
+    Get.toNamed(RoutesClass.getLoginRoute());
   }
 }
 

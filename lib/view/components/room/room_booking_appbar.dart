@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
 import '../../../provider/booking_provider.dart';
@@ -21,7 +22,7 @@ class RoomBookingAppBar extends StatelessWidget implements PreferredSizeWidget{
       ),
       leading: InkWell(
         onTap: (){
-          Navigator.pop(context);
+          Get.back();
           context.read<BookingProvider>().clearTextController();
         },
         child: Image.asset(

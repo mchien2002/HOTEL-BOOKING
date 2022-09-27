@@ -2,5 +2,5 @@
 
 abstract class RoomTypeRepository{
   static const ROOM_DATA = "/v1/roomtype";
-  Future getRoomList(String idHotel);
+  Future fetchRoomList(String idHotel);
 }

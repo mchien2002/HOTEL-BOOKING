@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hotel_service/data_sources/routes.dart';
-import 'package:hotel_service/view/search_screens/research_component_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
 import '../../../provider/search_provider.dart';
@@ -25,12 +24,7 @@ class SearchFilterAppBar extends StatelessWidget implements PreferredSizeWidget{
       ),
       actions: [
         IconButton(
-          onPressed: (){
-            Navigator.push(
-              context, 
-              MaterialPageRoute(builder: (context) => const ReSearchComponentScreen())
-            );
-          }, 
+          onPressed: () => Get.toNamed(RoutesClass.getReSearchFilterRoute()), 
           icon: const Icon(Icons.create_outlined, size: 30),
         )
       ],

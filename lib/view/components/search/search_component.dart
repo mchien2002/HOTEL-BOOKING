@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/provider/search_provider.dart';
 import 'package:hotel_service/data_sources/init.dart';
-import 'package:hotel_service/view/search_screens/search_location_screen.dart';
-import 'package:hotel_service/view/search_screens/search_quantity_screen.dart';
 import 'package:provider/provider.dart';
 
 class SearchComponent extends StatefulWidget {
@@ -32,9 +30,9 @@ class _SearchComponentState extends State<SearchComponent> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            TextBoxFieldSearch("Bạn muốn nghỉ dưỡng ở đâu?", searchProvider.location, const SearchLocationScreen(), const Icon(Icons.location_on)),
+            TextBoxFieldSearch("Bạn muốn nghỉ dưỡng ở đâu?", searchProvider.location, RoutesClass.getSearchLocation(), const Icon(Icons.location_on)),
             const DateTimeBooking(),
-            TextBoxFieldSearch("Số phòng", "${searchProvider.rooms[0]} Người lớn - ${searchProvider.rooms[1]} Phòng - ${searchProvider.rooms[2]} Trẻ em", const SearchQuantityScreen(), const Icon(Icons.home)),
+            TextBoxFieldSearch("Số phòng", "${searchProvider.rooms[0]} Người lớn - ${searchProvider.rooms[1]} Phòng - ${searchProvider.rooms[2]} Trẻ em", RoutesClass.getSearchQuantity(), const Icon(Icons.home)),
             const SizedBox(height: 20,),
             SizedBox(
               width: 300,
@@ -103,11 +101,7 @@ class _SearchComponentState extends State<SearchComponent> {
   }
 
   void buildPress(screen){
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => screen),
-    );
+    Get.toNamed(screen);
   }
 }
 

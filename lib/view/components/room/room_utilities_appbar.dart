@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../data_sources/init.dart';
 
 class RoomUtilitiesAppBar extends StatelessWidget implements PreferredSizeWidget{
@@ -23,7 +24,7 @@ class RoomUtilitiesAppBar extends StatelessWidget implements PreferredSizeWidget
       actions: [
         IconButton(
           onPressed: (){
-            Navigator.pop(context);
+            Get.back();
           },
           icon: Image.asset(
             "assets/images/ic_close1.png", 

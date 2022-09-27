@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../data_sources/init.dart';
-import '../../data_sources/repositories/hotel/hotel_repository_iml.dart';
-import '../../view/components/global/card_mini.dart';
+import '../../../data_sources/init.dart';
+import '../../../data_sources/repositories/hotel/hotel_repository_iml.dart';
+import '../global/card_mini.dart';
 
 class MoreHotelWidget extends StatefulWidget {
   const MoreHotelWidget({

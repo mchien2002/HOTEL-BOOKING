@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
 import '../../../provider/register_provider.dart';
@@ -43,7 +44,7 @@ class DialogWindow extends StatelessWidget {
               color: colorPrimary,
               onPressed: () {
                 context.read<RegisterInfoProvider>().tryAgaint();
-                Navigator.pop(context);
+                Get.back();
               },
               child: const Center(
                 child: Text(

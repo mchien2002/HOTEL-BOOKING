@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hotel_service/view/register_screens/hotel_login_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
 import '../../../provider/register_provider.dart';

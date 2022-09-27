@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use, non_constant_identifier_names
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/models/hotel_data_model.dart';
 import 'package:hotel_service/view/detail_screens/room_utilities_screen.dart';
 import '../../../data_sources/init.dart';
@@ -226,9 +228,9 @@ class _RoomDetailOverviewState extends State<RoomDetailOverview> {
   }
 
   void buildPress(){
-    Navigator.push(
-      context,  
-      MaterialPageRoute(builder: (context) => RoomUtilitiesScreen(data: widget.hotelData,))
+    Get.toNamed(
+      RoutesClass.getUtilitiesRoute(widget.hotelData.id!),
+      arguments: RoomUtilitiesScreen(data: widget.hotelData)
     );
   }
 }
