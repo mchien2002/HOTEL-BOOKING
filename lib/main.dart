@@ -80,7 +80,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp( 
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
+      theme: ThemeData(
+        fontFamily: 'Google Sans',
+      ),
       builder: EasyLoading.init(),
       initialRoute: RoutesClass.getHomeRoute(),
       getPages: RoutesClass.routes
