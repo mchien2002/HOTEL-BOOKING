@@ -16,16 +16,16 @@ import 'package:hotel_service/provider/booking_provider.dart';
 import 'package:hotel_service/provider/register_provider.dart';
 import 'package:hotel_service/provider/search_provider.dart';
 import 'package:provider/provider.dart';
-void main() async{
+
+void main() async {
   // ĐỔI MÀU STATUS BAR
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent, 
-    statusBarIconBrightness: Brightness.dark
-  ));
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark));
   // IN ORDER TO ENABLE THIS OPTION BLOBALLY IN YOUR PROJECT,
-  HttpOverrides.global = MyHttpOverrides ();
+  HttpOverrides.global = MyHttpOverrides();
   // INIT HIVE FLUTTER
-  WidgetsFlutterBinding.ensureInitialized();    
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(CityAdapter());
   Hive.registerAdapter(HotelDataAdapter());
@@ -33,16 +33,14 @@ void main() async{
   Hive.registerAdapter(RoomTypeAdapter());
   Hive.registerAdapter(RoomsAdapter());
   Hive.registerAdapter(PriceAdapter());
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => SearchProvider()),
-        ChangeNotifierProvider(create: (_) => RegisterInfoProvider()),
-        ChangeNotifierProvider(create: (_) => BookingProvider()),
-      ],
-      child: MyApp(),
-    )
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => SearchProvider()),
+      ChangeNotifierProvider(create: (_) => RegisterInfoProvider()),
+      ChangeNotifierProvider(create: (_) => BookingProvider()),
+    ],
+    child: MyApp(),
+  ));
   configLoading();
 }
 
@@ -60,7 +58,7 @@ void configLoading() {
     ..maskColor = Colors.blue.withOpacity(0.5)
     ..userInteractions = true
     ..dismissOnTap = false;
-    // ..customAnimation = CustomAnimation();
+  // ..customAnimation = CustomAnimation();
 }
 
 class MyApp extends StatefulWidget {
@@ -72,28 +70,28 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp( 
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Google Sans',
-      ),
-      builder: EasyLoading.init(),
-      initialRoute: RoutesClass.getHomeRoute(),
-      getPages: RoutesClass.routes
-    );
+    return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Google Sans',
+        ),
+        builder: EasyLoading.init(),
+        initialRoute: RoutesClass.getHomeRoute(),
+        getPages: RoutesClass.routes);
   }
 }
 
-class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

@@ -12,16 +12,16 @@ class MoreHotelWidget extends StatefulWidget {
   // SIZE OF CARD MINI
   final double itemWidth;
   final double itemHeight;
-  
+
   @override
   State<MoreHotelWidget> createState() => _MoreHotelWidgetState();
-} 
+}
 
 class _MoreHotelWidgetState extends State<MoreHotelWidget> {
   // LIST HOTEL DATA
   var _hotelData = [];
-  // GET LIST HOTEL DATA 
-  getHotelData()async{
+  // GET LIST HOTEL DATA
+  getHotelData() async {
     _hotelData = await HotelRepositoryIml().fetchHotelList();
     setState(() {});
   }
@@ -35,20 +35,20 @@ class _MoreHotelWidgetState extends State<MoreHotelWidget> {
   @override
   Widget build(BuildContext context) {
     return SliverGrid(
-      // BUILD GRID VIEW FOR CARD MINI
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: (widget.itemWidth / widget.itemHeight),
-        crossAxisSpacing: 0
-      ),
-      delegate: SliverChildBuilderDelegate((context, index){
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: paddingLR),
-          child: CardMiniItem(hotelData: _hotelData[index],)
-        );
-      },
-      childCount: _hotelData.length,
-      )
-    );
+        // BUILD GRID VIEW FOR CARD MINI
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: (widget.itemWidth / widget.itemHeight),
+            crossAxisSpacing: 0),
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return Container(
+                padding: const EdgeInsets.symmetric(horizontal: paddingLR),
+                child: CardMiniItem(
+                  hotelData: _hotelData[index],
+                ));
+          },
+          childCount: _hotelData.length,
+        ));
   }
 }

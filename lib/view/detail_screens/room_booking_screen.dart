@@ -6,23 +6,24 @@ import '../components/room/room_booking_appbar.dart';
 import '../../data_sources/init.dart';
 
 class RoomBookingScreen extends StatefulWidget {
-  const RoomBookingScreen({ Key? key, required this.roomTypeData, required this.hotelName }) : super(key: key);
+  const RoomBookingScreen(
+      {Key? key, required this.roomTypeData, required this.hotelName})
+      : super(key: key);
   final RoomType roomTypeData;
   final String hotelName;
   @override
   _RoomBookingScreenState createState() => _RoomBookingScreenState();
 }
 
-class _RoomBookingScreenState extends State<RoomBookingScreen>{ 
+class _RoomBookingScreenState extends State<RoomBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colorWhite,
-      appBar: const RoomBookingAppBar(),
-      body: RoomBookingBody(
-        hotelName: widget.hotelName, 
-        roomTypeData: widget.roomTypeData,
-      )
-    );
+        backgroundColor: colorWhite,
+        appBar: const RoomBookingAppBar(),
+        body: RoomBookingBody(
+          hotelName: widget.hotelName,
+          roomTypeData: widget.roomTypeData,
+        ));
   }
 }

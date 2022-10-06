@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SearchBox extends StatelessWidget {
-  const SearchBox({
-    Key? key,
-    required this.title
-  }) : super(key: key);
+  const SearchBox({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -15,7 +12,7 @@ class SearchBox extends StatelessWidget {
       style: const TextStyle(fontSize: 11, color: Colors.black),
       decoration: InputDecoration(
         prefixIcon: const Icon(
-          Icons.search, 
+          Icons.search,
           size: 20,
         ),
         filled: true,

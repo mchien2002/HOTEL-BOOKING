@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-class RegisterInfoProvider with ChangeNotifier{
+class RegisterInfoProvider with ChangeNotifier {
   bool _pause = false;
   int _maxseconds = 60;
   int _seconds = 0;
@@ -19,18 +18,16 @@ class RegisterInfoProvider with ChangeNotifier{
   String get phone => _phone;
   String get codeOTP => _codeOTP;
   String get token => _token;
-  
 
-  updatePhone(String phoneStr){
+  updatePhone(String phoneStr) {
     _phone = phoneStr;
     notifyListeners();
-  }  
+  }
 
-  decrease(){
-    if (_maxseconds > 0){
+  decrease() {
+    if (_maxseconds > 0) {
       _maxseconds--;
-    }
-    else{
+    } else {
       _pause = true;
     }
     _minutes = _maxseconds ~/ 60;
@@ -38,7 +35,7 @@ class RegisterInfoProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  resetTimer(){
+  resetTimer() {
     _maxseconds = 60;
     _pause = false;
     _minutes = 1;
@@ -46,27 +43,26 @@ class RegisterInfoProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  getOTP(String code){
+  getOTP(String code) {
     _codeOTP = '';
     _pause = true;
     _codeOTP = code;
     notifyListeners();
   }
 
-  tryAgaint(){
+  tryAgaint() {
     _pause = false;
     notifyListeners();
   }
 
-  returnLogin(Timer timer){
+  returnLogin(Timer timer) {
     timer.cancel();
     notifyListeners();
   }
 
-  Future<String> getToken()async{
+  Future<String> getToken() async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     _token = storage.getString("data")!;
     return _token;
   }
 }
-  

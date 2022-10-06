@@ -25,40 +25,30 @@ class RoomDetailPolicy extends StatelessWidget {
     );
   }
 
-  Widget PolicyWidget(BuildContext context, String policy, String time, bool right) {
+  Widget PolicyWidget(
+      BuildContext context, String policy, String time, bool right) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       width: MediaQuery.of(context).size.width * .5 - paddingLR,
       decoration: BoxDecoration(
-        border: right ? const Border(
-          left: BorderSide(
-            width: 0.5, 
-            color: Color.fromARGB(255, 196, 193, 193)
-          )
-        ) : const Border(
-          right: BorderSide(
-            width: 0.5, 
-            color: Color.fromARGB(255, 196, 193, 193)
-          )
-        ),
+        border: right
+            ? const Border(
+                left: BorderSide(
+                    width: 0.5, color: Color.fromARGB(255, 196, 193, 193)))
+            : const Border(
+                right: BorderSide(
+                    width: 0.5, color: Color.fromARGB(255, 196, 193, 193))),
       ),
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(policy),
-            Text(
-              time, 
-              style: const TextStyle(
-                fontWeight: FontWeight.w500, 
-                height: 1.5, 
-                fontSize: 15
-              ),
-            ),
-          ]
-        ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(policy),
+          Text(
+            time,
+            style: const TextStyle(
+                fontWeight: FontWeight.w500, height: 1.5, fontSize: 15),
+          ),
+        ]),
       ),
     );
   }
 }
-

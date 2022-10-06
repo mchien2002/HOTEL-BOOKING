@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../data_sources/init.dart';
 
 class RoomDetailAttractions extends StatefulWidget {
-  const RoomDetailAttractions({ Key? key }) : super(key: key);
+  const RoomDetailAttractions({Key? key}) : super(key: key);
 
   @override
   _RoomDetailAttractionsState createState() => _RoomDetailAttractionsState();
@@ -16,12 +16,16 @@ class _RoomDetailAttractionsState extends State<RoomDetailAttractions> {
     return Column(
       children: [
         MapWidget(),
-        const SizedBox(height: 10,),
-        Column(children: [
-          AttractionsWidget(),
-          AttractionsWidget(),
-          AttractionsWidget(),
-        ],)
+        const SizedBox(
+          height: 10,
+        ),
+        Column(
+          children: [
+            AttractionsWidget(),
+            AttractionsWidget(),
+            AttractionsWidget(),
+          ],
+        )
       ],
     );
   }
@@ -34,7 +38,10 @@ class _RoomDetailAttractionsState extends State<RoomDetailAttractions> {
           height: 150,
           decoration: BoxDecoration(
             image: const DecorationImage(
-              image: AssetImage("assets/images/img_google_map.jpg",), fit: BoxFit.cover,
+              image: AssetImage(
+                "assets/images/img_google_map.jpg",
+              ),
+              fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -50,10 +57,10 @@ class _RoomDetailAttractionsState extends State<RoomDetailAttractions> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            onPressed: (){},
-            color: Colors.black, 
+            onPressed: () {},
+            color: Colors.black,
             child: const Text(
-              "Mở Bản Đồ", 
+              "Mở Bản Đồ",
               style: TextStyle(color: colorWhite, fontSize: 10),
             ),
           ),

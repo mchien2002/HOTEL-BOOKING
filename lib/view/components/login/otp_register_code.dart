@@ -11,53 +11,45 @@ import '../../../provider/register_provider.dart';
 import '../global/dialog_window.dart';
 
 class OTPRegisterCode extends StatefulWidget {
-  const OTPRegisterCode({
-    Key? key, required this.timer
-  }) : super(key: key);
+  const OTPRegisterCode({Key? key, required this.timer}) : super(key: key);
   final Timer timer;
-  
+
   @override
   State<OTPRegisterCode> createState() => _OTPRegisterCodeState();
 }
 
-class _OTPRegisterCodeState extends State<OTPRegisterCode> implements RegisterViewContract{
+class _OTPRegisterCodeState extends State<OTPRegisterCode>
+    implements RegisterViewContract {
   RegisterPresenter? _registerPresenter;
 
   @override
   onLoadError(String error) {
     showDialog(
-      context: context, 
-      builder: (context) => DialogWindow(code: error)
-    );
+        context: context, builder: (context) => DialogWindow(code: error));
   }
-  
+
   @override
   onResponseRegister(String response) {
-    if (response == "Success"){
+    if (response == "Success") {
       Get.toNamed(RoutesClass.getSearchHomeRoute());
-    }
-    else{
+    } else {
       showDialog(
-        context: context, 
-        builder: (context) => DialogWindow(code: response)
-      );
+          context: context, builder: (context) => DialogWindow(code: response));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-  // BUILD CODE CONFIRM OTP REGISTER
+    // BUILD CODE CONFIRM OTP REGISTER
     return Form(
       child: PinCodeTextField(
         enabled: context.read<RegisterInfoProvider>().pause ? false : true,
         autoFocus: true,
         showCursor: false,
-        onChanged: (value){},
+        onChanged: (value) {},
         appContext: context,
         length: 6,
-        textStyle: const TextStyle(
-          color: colorPrimary
-        ),
+        textStyle: const TextStyle(color: colorPrimary),
         blinkWhenObscuring: true,
         animationType: AnimationType.fade,
         pinTheme: PinTheme(
@@ -79,9 +71,11 @@ class _OTPRegisterCodeState extends State<OTPRegisterCode> implements RegisterVi
       ),
     );
   }
+
   // SHOW MESSAGE RESPONSE
-  void sendCode(BuildContext context, String codeOTP) async{
+  void sendCode(BuildContext context, String codeOTP) async {
     _registerPresenter = RegisterPresenter(this);
-    _registerPresenter!.confirmOTPCode(context.read<RegisterInfoProvider>().phone, codeOTP);
+    _registerPresenter!
+        .confirmOTPCode(context.read<RegisterInfoProvider>().phone, codeOTP);
   }
 }

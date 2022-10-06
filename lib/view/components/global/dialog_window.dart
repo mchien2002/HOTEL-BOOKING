@@ -18,11 +18,10 @@ class DialogWindow extends StatelessWidget {
     // BUILD DIALOG WINDOW TO SHOW ERROR MESSAGE
     return AlertDialog(
       title: const Center(
-        child: Text(
-          'Thông báo', 
-          style: TextStyle(fontSize: 15),
-        )
-      ),
+          child: Text(
+        'Thông báo',
+        style: TextStyle(fontSize: 15),
+      )),
       content: Container(
         height: 40,
         alignment: Alignment.center,
@@ -39,8 +38,7 @@ class DialogWindow extends StatelessWidget {
             width: 120,
             child: RaisedButton(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)
-              ),
+                  borderRadius: BorderRadius.circular(10)),
               color: colorPrimary,
               onPressed: () {
                 context.read<RegisterInfoProvider>().tryAgaint();
@@ -48,8 +46,11 @@ class DialogWindow extends StatelessWidget {
               },
               child: const Center(
                 child: Text(
-                  "Đóng", 
-                  style: TextStyle(color: colorWhite, fontWeight: FontWeight.bold, fontSize: 15),
+                  "Đóng",
+                  style: TextStyle(
+                      color: colorWhite,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
                 ),
               ),
             ),

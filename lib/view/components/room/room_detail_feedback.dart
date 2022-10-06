@@ -4,7 +4,7 @@ import '../../../data_sources/init.dart';
 import '../global/rating_star.dart';
 
 class RoomDetailFeedBack extends StatefulWidget {
-  const RoomDetailFeedBack({ Key? key }) : super(key: key);
+  const RoomDetailFeedBack({Key? key}) : super(key: key);
 
   @override
   _RoomDetailFeedBackState createState() => _RoomDetailFeedBackState();
@@ -17,7 +17,9 @@ class _RoomDetailFeedBackState extends State<RoomDetailFeedBack> {
     return Column(
       children: [
         RoomDetailRating(context),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         RoomDetailComment(context),
       ],
     );
@@ -36,24 +38,26 @@ class _RoomDetailFeedBackState extends State<RoomDetailFeedBack> {
                   height: 50,
                   width: 50,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    image: const DecorationImage(
-                      image: AssetImage("assets/images/img_userTemp.jpg"), 
-                      fit: BoxFit.cover
-                    )
-                  ),
+                      borderRadius: BorderRadius.circular(50),
+                      image: const DecorationImage(
+                          image: AssetImage("assets/images/img_userTemp.jpg"),
+                          fit: BoxFit.cover)),
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
-                      "Nguyễn Thị Thùy Linh", 
-                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                      "Nguyễn Thị Thùy Linh",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
                     ),
                     Text(
-                      "07:55 22/5/2022", 
-                      style: TextStyle(height: 1.5, fontSize: 13, color: color777777),
+                      "07:55 22/5/2022",
+                      style: TextStyle(
+                          height: 1.5, fontSize: 13, color: color777777),
                     )
                   ],
                 )
@@ -62,19 +66,25 @@ class _RoomDetailFeedBackState extends State<RoomDetailFeedBack> {
             RatingStarWidget(rate: 4.toDouble()),
           ],
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         const Text(
-          "Đánh giá cho: Vé vào cổng điểm tham quan: Làng gốm Thanh Hà", 
-          style: TextStyle(color: color777777, fontSize: 13), 
+          "Đánh giá cho: Vé vào cổng điểm tham quan: Làng gốm Thanh Hà",
+          style: TextStyle(color: color777777, fontSize: 13),
           textAlign: TextAlign.justify,
         ),
-        const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         const Text(
-          "Mình mua vé trên Sàn du lịch và đổi ngay tại quầy vé làng gốm. Chỉ cần xuất voucher và nhận ngay một vé vào cổng, rất nhanh và tiện lợi.", 
-          style: TextStyle(fontSize: 15), 
+          "Mình mua vé trên Sàn du lịch và đổi ngay tại quầy vé làng gốm. Chỉ cần xuất voucher và nhận ngay một vé vào cổng, rất nhanh và tiện lợi.",
+          style: TextStyle(fontSize: 15),
           textAlign: TextAlign.justify,
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         Center(
           child: ButtonRating(context),
         )
@@ -88,18 +98,17 @@ class _RoomDetailFeedBackState extends State<RoomDetailFeedBack> {
       width: MediaQuery.of(context).size.width * .9,
       child: RaisedButton(
         elevation: 0,
-        onPressed: (){},
+        onPressed: () {},
         color: colorWhite,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
           side: const BorderSide(color: colorPrimary, width: 1),
         ),
         child: const Center(
-          child: Text(
-            "Xem tất cả đánh giá", 
-            style: TextStyle(color: colorPrimary),
-          )
-        ),
+            child: Text(
+          "Xem tất cả đánh giá",
+          style: TextStyle(color: colorPrimary),
+        )),
       ),
     );
   }
@@ -115,12 +124,14 @@ class _RoomDetailFeedBackState extends State<RoomDetailFeedBack> {
             child: Column(
               children: [
                 const Text(
-                  "4.2", 
+                  "4.2",
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.w500),
                 ),
-                RatingStarWidget(rate: 4.toDouble(),),
+                RatingStarWidget(
+                  rate: 4.toDouble(),
+                ),
                 const Text(
-                  "(14 đánh giá)", 
+                  "(14 đánh giá)",
                   style: TextStyle(height: 1.5),
                 ),
               ],
@@ -157,7 +168,9 @@ class _RoomDetailFeedBackState extends State<RoomDetailFeedBack> {
             borderRadius: BorderRadius.circular(50),
           ),
           child: Container(
-            width: (MediaQuery.of(context).size.width - 2 * paddingLR) * .5 * (count / 100),
+            width: (MediaQuery.of(context).size.width - 2 * paddingLR) *
+                .5 *
+                (count / 100),
             decoration: BoxDecoration(
               color: colorD67402,
               borderRadius: BorderRadius.circular(50),

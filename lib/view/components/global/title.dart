@@ -5,11 +5,9 @@ import 'package:hotel_service/data_sources/routes.dart';
 import 'package:hotel_service/view/search_screens/search_showmore_screen.dart';
 
 class TitleWidget extends StatefulWidget {
-  const TitleWidget({
-    Key? key,
-    required this.title, this.more
-  }) : super(key: key);
-  // TITLE FOR LIST HOTEL 
+  const TitleWidget({Key? key, required this.title, this.more})
+      : super(key: key);
+  // TITLE FOR LIST HOTEL
   // BUILD BUTTON TO SHOW MORE HOTEL
   final String title;
   final String? more;
@@ -21,32 +19,32 @@ class TitleWidget extends StatefulWidget {
 class _TitleWidgetState extends State<TitleWidget> {
   @override
   Widget build(BuildContext context) {
-    // BUILD TITLE WIDGET 
+    // BUILD TITLE WIDGET
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
       child: Row(
         children: [
           Text(
-            widget.title, 
+            widget.title,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           const Expanded(child: Divider()),
-          widget.more != null ? InkWell(
-            onTap: () => buildPress(widget.title),
-            child: Text(
-              widget.more!, 
-              style: const TextStyle(color: color929394,)
-            )
-          ) : Container(),
+          widget.more != null
+              ? InkWell(
+                  onTap: () => buildPress(widget.title),
+                  child: Text(widget.more!,
+                      style: const TextStyle(
+                        color: color929394,
+                      )))
+              : Container(),
         ],
       ),
     );
   }
+
   // FUNCTION ENFORCEMENT EVENT WHEN WE CLICK
-  void buildPress(String title){
-    Get.toNamed(
-      RoutesClass.getSearchShowMoreRoute(),
-      arguments: SearchShowMoreScreen(title: title)
-    );
+  void buildPress(String title) {
+    Get.toNamed(RoutesClass.getSearchShowMoreRoute(),
+        arguments: SearchShowMoreScreen(title: title));
   }
 }

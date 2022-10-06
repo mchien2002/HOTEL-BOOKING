@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class BookingProvider with ChangeNotifier{
+class BookingProvider with ChangeNotifier {
   bool _pressBookingButton = false;
   TextEditingController textRequirements = TextEditingController();
   Map<String, TextEditingController> textControllers = {
@@ -14,9 +14,9 @@ class BookingProvider with ChangeNotifier{
   };
   bool get pressBookingButton => _pressBookingButton;
 
-  checkButton(){
-    for (var item in textControllers.values){
-      if (item.text.isEmpty){
+  checkButton() {
+    for (var item in textControllers.values) {
+      if (item.text.isEmpty) {
         _pressBookingButton = false;
         notifyListeners();
         return;
@@ -24,10 +24,10 @@ class BookingProvider with ChangeNotifier{
     }
     _pressBookingButton = true;
     notifyListeners();
-  } 
+  }
 
-  clearTextController(){
-    for (TextEditingController itemText in textControllers.values){
+  clearTextController() {
+    for (TextEditingController itemText in textControllers.values) {
       itemText.clear();
     }
     notifyListeners();

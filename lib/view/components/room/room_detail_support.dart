@@ -13,7 +13,7 @@ class RoomDetailSupport extends StatelessWidget {
     return Column(
       children: [
         const Text(
-          "Bạn Thắc mắc về dịch vụ này? Chat với Sàn du lịch nhé!", 
+          "Bạn Thắc mắc về dịch vụ này? Chat với Sàn du lịch nhé!",
           style: TextStyle(fontSize: 15),
         ),
         const SizedBox(height: 10),
@@ -28,20 +28,18 @@ class RoomDetailSupport extends StatelessWidget {
       width: MediaQuery.of(context).size.width * .9,
       child: RaisedButton(
         elevation: 0,
-        onPressed: (){},
+        onPressed: () {},
         color: colorWhite,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
           side: const BorderSide(color: colorPrimary, width: 1),
         ),
         child: const Center(
-          child: Text(
-            "Xem tất cả đánh giá", 
-            style: TextStyle(color: colorPrimary),
-          )
-        ),
+            child: Text(
+          "Xem tất cả đánh giá",
+          style: TextStyle(color: colorPrimary),
+        )),
       ),
     );
   }
 }
-

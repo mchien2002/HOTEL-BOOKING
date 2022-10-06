@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../data_sources/init.dart';
 import '../../../provider/booking_provider.dart';
 
-class RoomBookingAppBar extends StatelessWidget implements PreferredSizeWidget{
+class RoomBookingAppBar extends StatelessWidget implements PreferredSizeWidget {
   const RoomBookingAppBar({
     Key? key,
   }) : super(key: key);
@@ -17,21 +17,21 @@ class RoomBookingAppBar extends StatelessWidget implements PreferredSizeWidget{
       backgroundColor: colorWhite,
       elevation: 0,
       title: const Text(
-        "Thông tin đặt phòng", 
+        "Thông tin đặt phòng",
         style: TextStyle(color: Colors.black),
       ),
       leading: InkWell(
-        onTap: (){
-          Get.back();
-          context.read<BookingProvider>().clearTextController();
-        },
-        child: Image.asset(
-          "assets/images/img_back.png", 
-          scale: 2,
-        )
-      ),
+          onTap: () {
+            Get.back();
+            context.read<BookingProvider>().clearTextController();
+          },
+          child: Image.asset(
+            "assets/images/img_back.png",
+            scale: 2,
+          )),
     );
   }
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

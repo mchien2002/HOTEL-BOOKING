@@ -8,13 +8,14 @@ import '../components/search/search_filter_appbar.dart';
 import '../components/search/search_filter_body.dart';
 
 class SearchFilterScreen extends StatefulWidget {
-  const SearchFilterScreen({ Key? key }) : super(key: key);
+  const SearchFilterScreen({Key? key}) : super(key: key);
 
   @override
   _SearchFilterScreenState createState() => _SearchFilterScreenState();
 }
 
-class _SearchFilterScreenState extends State<SearchFilterScreen> implements HotelListViewContract{
+class _SearchFilterScreenState extends State<SearchFilterScreen>
+    implements HotelListViewContract {
   bool _isLoading = true;
   bool _isError = false;
   String _errorMessage = '';
@@ -22,7 +23,7 @@ class _SearchFilterScreenState extends State<SearchFilterScreen> implements Hote
   HotelListPresenter? _hotelListPresenter;
 
   @override
-  void initState(){
+  void initState() {
     _hotelListPresenter = HotelListPresenter(this);
     _hotelListPresenter!.loadHotelList();
     super.initState();
@@ -44,12 +45,19 @@ class _SearchFilterScreenState extends State<SearchFilterScreen> implements Hote
       _isLoading = false;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    return _isError ? ErrorScreen(errorMessage: _errorMessage) : Scaffold(
-      backgroundColor: colorFFEFE5,
-      appBar: SearchFilterAppBar(dataLenght: _hotelData.length),
-      body: _isLoading ? const SpinKitThreeInOut(color: colorB2B2B2,) : SearchFilterBody(data: _hotelData),
-    );
+    return _isError
+        ? ErrorScreen(errorMessage: _errorMessage)
+        : Scaffold(
+            backgroundColor: colorFFEFE5,
+            appBar: SearchFilterAppBar(dataLenght: _hotelData.length),
+            body: _isLoading
+                ? const SpinKitThreeInOut(
+                    color: colorB2B2B2,
+                  )
+                : SearchFilterBody(data: _hotelData),
+          );
   }
 }

@@ -16,24 +16,27 @@ class OTPRegisterRules extends StatelessWidget {
           child: RichText(
             textAlign: TextAlign.center,
             text: const TextSpan(
-              style: TextStyle(fontSize: 14, color: color929394),
-              children: <TextSpan>[
-                TextSpan(
-                  text: "Hoàn thành bước này nghĩa là bạn đồng ý với ", 
-                ),
-                TextSpan(
-                  text: "Điều khoản ",
-                  style: TextStyle(color: color777777, fontWeight: FontWeight.bold, fontSize: 15)
-                ), 
-                TextSpan(
-                  text: "sử dụng của ",
-                ),
-                TextSpan(
-                  text: "Sàn du lịch",
-                  style: TextStyle(color: color777777, fontWeight: FontWeight.bold, fontSize: 15)
-                )
-              ]
-            ),
+                style: TextStyle(fontSize: 14, color: color929394),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: "Hoàn thành bước này nghĩa là bạn đồng ý với ",
+                  ),
+                  TextSpan(
+                      text: "Điều khoản ",
+                      style: TextStyle(
+                          color: color777777,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15)),
+                  TextSpan(
+                    text: "sử dụng của ",
+                  ),
+                  TextSpan(
+                      text: "Sàn du lịch",
+                      style: TextStyle(
+                          color: color777777,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15))
+                ]),
           ),
         ),
       ],

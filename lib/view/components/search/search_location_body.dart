@@ -23,51 +23,51 @@ class _SearchLocationBodyState extends State<SearchLocationBody> {
       child: ListView(
         children: [
           buildBodySearchLocation("Hà Nội", "Hà Nội", "img_icon_location.png"),
-          buildBodySearchLocation("Đà Nẵng", "Đà Nẵng", "img_icon_location.png"),
+          buildBodySearchLocation(
+              "Đà Nẵng", "Đà Nẵng", "img_icon_location.png"),
           buildBodySearchLocation("TP HCM", "TP HCM", "img_icon_location.png"),
-          buildBodySearchLocation("Gia Lai", "Gia Lai", "img_icon_location.png"),
+          buildBodySearchLocation(
+              "Gia Lai", "Gia Lai", "img_icon_location.png"),
         ],
       ),
     );
   }
 
-  Widget buildBodySearchLocation(String title, String content, String urlIcon){
+  Widget buildBodySearchLocation(String title, String content, String urlIcon) {
     return InkWell(
       onTap: () => buildPress(context, title),
       child: Padding(
-        padding: const EdgeInsets.only(left: paddingLR, bottom: 20,),
+        padding: const EdgeInsets.only(
+          left: paddingLR,
+          bottom: 20,
+        ),
         child: Row(
           children: [
             Container(
               height: 40,
               width: 40,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: ExactAssetImage("assets/images/$urlIcon")
-                )
-              ),
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                      image: ExactAssetImage("assets/images/$urlIcon"))),
             ),
-
             Expanded(
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0,8,4,0),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        title, 
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                      )
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0,8,4,0),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 4, 0),
                     child: Container(
                         alignment: Alignment.centerLeft,
-                      child: Text(content)
-                    ),
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8, 4, 0),
+                    child: Container(
+                        alignment: Alignment.centerLeft, child: Text(content)),
                   )
                 ],
               ),
@@ -78,7 +78,7 @@ class _SearchLocationBodyState extends State<SearchLocationBody> {
     );
   }
 
-  void buildPress(BuildContext context, String checkStr){
+  void buildPress(BuildContext context, String checkStr) {
     context.read<SearchProvider>().updateLocation(checkStr);
     Get.back();
   }

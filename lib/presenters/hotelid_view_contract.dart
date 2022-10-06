@@ -1,20 +1,20 @@
 import 'package:hotel_service/data_sources/injection.dart';
 import 'package:hotel_service/data_sources/repositories/hotel/hotel_repository.dart';
 
-abstract class HotelByIDViewContract{
+abstract class HotelByIDViewContract {
   onLoadHotelIDComplete(hotelData);
   onLoadError(String error);
 }
 
-class HotelByIDPresenter{
+class HotelByIDPresenter {
   final HotelByIDViewContract? _view;
   HotelRepository? _repository;
 
-  HotelByIDPresenter(this._view){
+  HotelByIDPresenter(this._view) {
     _repository = Injector().handleData();
   }
 
-  loadHotelID(String id){
+  loadHotelID(String id) {
     assert(_view != null && _repository != null);
     _repository!
         .fetchHotelByID(id)

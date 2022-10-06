@@ -8,7 +8,6 @@ part 'hotel_data_model.g.dart';
 
 @HiveType(typeId: 9)
 class HotelData {
-
   @HiveField(0)
   String? _address;
 

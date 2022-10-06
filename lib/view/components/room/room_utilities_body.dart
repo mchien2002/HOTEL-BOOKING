@@ -4,10 +4,10 @@ import 'package:hotel_service/view/components/room/room_detail_utilities.dart';
 import '../../../data_sources/init.dart';
 import '../global/title.dart';
 
-
 class RoomUtilitiesBody extends StatelessWidget {
   const RoomUtilitiesBody({
-    Key? key, this.data,
+    Key? key,
+    this.data,
   }) : super(key: key);
   final data;
 
@@ -19,7 +19,9 @@ class RoomUtilitiesBody extends StatelessWidget {
       child: ListView(
         children: [
           BannerPicture(getUrl()),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           Text(
             data.description!,
             textAlign: TextAlign.justify,
@@ -28,9 +30,10 @@ class RoomUtilitiesBody extends StatelessWidget {
           const TitleWidget(title: "Tiện ích trong phòng"),
           Wrap(
             children: List.generate(
-              data.facilities.length, 
-              (index) => RoomUtilities(facilities: data.facilities[index],)
-            ),
+                data.facilities.length,
+                (index) => RoomUtilities(
+                      facilities: data.facilities[index],
+                    )),
           )
         ],
       ),
@@ -41,20 +44,16 @@ class RoomUtilitiesBody extends StatelessWidget {
     return Container(
       height: 200,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: NetworkImage(picUrl),
-          fit: BoxFit.cover
-        )
-      ),
+          borderRadius: BorderRadius.circular(10),
+          image:
+              DecorationImage(image: NetworkImage(picUrl), fit: BoxFit.cover)),
     );
   }
 
-  String getUrl(){
-    try{
+  String getUrl() {
+    try {
       return data.banner!;
-    }
-    catch(e){
+    } catch (e) {
       return data.photos[0];
     }
   }

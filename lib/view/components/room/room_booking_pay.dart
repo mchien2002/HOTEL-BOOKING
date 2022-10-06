@@ -9,7 +9,8 @@ import '../global/title.dart';
 
 class RoomBookingPay extends StatefulWidget {
   const RoomBookingPay({
-    Key? key, required this.roomTypeData,
+    Key? key,
+    required this.roomTypeData,
   }) : super(key: key);
   final RoomType roomTypeData;
 
@@ -26,15 +27,28 @@ class _RoomBookingPayState extends State<RoomBookingPay> {
       children: [
         const TitleWidget(title: "Tóm tắt thanh toán"),
         const Text("2 đêm (Thứ 4 18/07 - Thứ 5 20/07)"),
-        const SizedBox(height: 20,),
-        PriceWidget("Giá phòng / đêm", widget.roomTypeData.rooms![0].price!.nightlyPrice!),
-        PriceWidget("Tạm tính", widget.roomTypeData.rooms![0].price!.nightlyPrice!, 2),
+        const SizedBox(
+          height: 20,
+        ),
+        PriceWidget("Giá phòng / đêm",
+            widget.roomTypeData.rooms![0].price!.nightlyPrice!),
+        PriceWidget(
+            "Tạm tính", widget.roomTypeData.rooms![0].price!.nightlyPrice!, 2),
         VoucherWidget(),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         PriceWidget("Mã ưu đãi", 100000),
-        PriceWidget("Tổng cộng", widget.roomTypeData.rooms![0].price!.nightlyPrice!, 2, 100000, true),
+        PriceWidget(
+            "Tổng cộng",
+            widget.roomTypeData.rooms![0].price!.nightlyPrice!,
+            2,
+            100000,
+            true),
         ContentBottom(),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
       ],
     );
   }
@@ -46,29 +60,32 @@ class _RoomBookingPayState extends State<RoomBookingPay> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              "Bao gồm tất cả các loại thuế và phí dịch vụ", 
+              "Bao gồm tất cả các loại thuế và phí dịch vụ",
               style: TextStyle(color: color777777, fontSize: 10, height: 2),
             ),
             InkWell(
-              onTap: () => Get.toNamed(
-                RoutesClass.getUtilitiesRoute(widget.roomTypeData.id!),
-                arguments: RoomUtilitiesScreen(data: widget.roomTypeData)
-              ),
-              child: const Text(
-                "Xem chi tiết phòng", 
-                style: TextStyle(color: colorPrimary, height: 2, fontSize: 12),
-              )
-            ),
+                onTap: () => Get.toNamed(
+                    RoutesClass.getUtilitiesRoute(widget.roomTypeData.id!),
+                    arguments: RoomUtilitiesScreen(data: widget.roomTypeData)),
+                child: const Text(
+                  "Xem chi tiết phòng",
+                  style:
+                      TextStyle(color: colorPrimary, height: 2, fontSize: 12),
+                )),
           ],
         ),
-        const SizedBox(height: 20,),
-        const Center(
-          child: Text(
-            "Vui lòng điển thông tin cẩn thận. Bạn không thể chủ động thay đổi thông tin đã gửi. Khi cần trợ giúp vui lòng liên hệ chúng tôi",
-            style: TextStyle(color: color777777, fontSize: 11,),
-            textAlign: TextAlign.center,
-          )
+        const SizedBox(
+          height: 20,
         ),
+        const Center(
+            child: Text(
+          "Vui lòng điển thông tin cẩn thận. Bạn không thể chủ động thay đổi thông tin đã gửi. Khi cần trợ giúp vui lòng liên hệ chúng tôi",
+          style: TextStyle(
+            color: color777777,
+            fontSize: 11,
+          ),
+          textAlign: TextAlign.center,
+        )),
       ],
     );
   }
@@ -92,15 +109,15 @@ class _RoomBookingPayState extends State<RoomBookingPay> {
             padding: const EdgeInsets.all(5),
             width: 100,
             child: RaisedButton(
-              onPressed: (){},
+              onPressed: () {},
               color: colorPrimary,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
               child: const Center(
-                child: Text(
-                  "Áp dụng", 
-                  style: TextStyle(color: colorWhite, fontSize: 13),
-                )
-              ),
+                  child: Text(
+                "Áp dụng",
+                style: TextStyle(color: colorWhite, fontSize: 13),
+              )),
             ),
           ),
         ),
@@ -108,23 +125,30 @@ class _RoomBookingPayState extends State<RoomBookingPay> {
     );
   }
 
-  Widget PriceWidget(String title, int price, [int night = 1, int voucher = 0, bool total = false]){
+  Widget PriceWidget(String title, int price,
+      [int night = 1, int voucher = 0, bool total = false]) {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              title, 
-              style: total ? const TextStyle(fontWeight: FontWeight.w500, fontSize: 20) : null,
+              title,
+              style: total
+                  ? const TextStyle(fontWeight: FontWeight.w500, fontSize: 20)
+                  : null,
             ),
             Text(
               "${oCcy.format(price * night - voucher).toString().replaceAll(',', ' ')} ${widget.roomTypeData.rooms![0].price!.currencyCode}",
-              style: total ? const TextStyle(color: colorFF6F15, fontSize: 20) : null,
+              style: total
+                  ? const TextStyle(color: colorFF6F15, fontSize: 20)
+                  : null,
             ),
           ],
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
       ],
     );
   }

@@ -5,7 +5,8 @@ import '../../../data_sources/init.dart';
 
 class RoomUtilities extends StatelessWidget {
   const RoomUtilities({
-    Key? key, required this.facilities,
+    Key? key,
+    required this.facilities,
   }) : super(key: key);
   final facilities;
 
@@ -17,15 +18,20 @@ class RoomUtilities extends StatelessWidget {
       width: MediaQuery.of(context).size.width * .5 - 2 * paddingLR,
       child: Row(
         children: [
-          SvgPicture.network(facilities.image!, height: 30, width: 30,),
-          const SizedBox(width: 10,),
-          Expanded(
-            child: Text(
-              facilities.name!, 
-              style: const TextStyle(fontSize: 12), 
-              overflow: TextOverflow.clip,
-            )
+          SvgPicture.network(
+            facilities.image!,
+            height: 30,
+            width: 30,
           ),
+          const SizedBox(
+            width: 10,
+          ),
+          Expanded(
+              child: Text(
+            facilities.name!,
+            style: const TextStyle(fontSize: 12),
+            overflow: TextOverflow.clip,
+          )),
         ],
       ),
     );

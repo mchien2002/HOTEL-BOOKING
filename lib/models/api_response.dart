@@ -3,10 +3,10 @@ import 'package:dio/dio.dart';
 late String message;
 
 class DioExceptions implements Exception {
-  DioExceptions.fromDioError(DioError dioError){
+  DioExceptions.fromDioError(DioError dioError) {
     switch (dioError.type) {
       case DioErrorType.cancel:
-        message = "Request to API server was cancelled";  
+        message = "Request to API server was cancelled";
         break;
       case DioErrorType.connectTimeout:
         message = "Connection timeout with API server";
@@ -15,8 +15,8 @@ class DioExceptions implements Exception {
         message = "Receive timeout in connection with API server";
         break;
       case DioErrorType.response:
-        message =
-            _handleError(dioError.response!.statusCode!, dioError.response?.data);
+        message = _handleError(
+            dioError.response!.statusCode!, dioError.response?.data);
         break;
       case DioErrorType.sendTimeout:
         message = "Send timeout in connection with API server";

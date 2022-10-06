@@ -13,7 +13,7 @@ import '../components/room/room_detail_support.dart';
 import '../../data_sources/init.dart';
 
 class RoomDetailScreen extends StatefulWidget {
-  const RoomDetailScreen({ Key? key, required this.hotelData}) : super(key: key);
+  const RoomDetailScreen({Key? key, required this.hotelData}) : super(key: key);
   final HotelData hotelData;
 
   @override
@@ -21,27 +21,26 @@ class RoomDetailScreen extends StatefulWidget {
   _RoomDetailScreenState createState() => _RoomDetailScreenState();
 }
 
-class _RoomDetailScreenState extends State<RoomDetailScreen>{
+class _RoomDetailScreenState extends State<RoomDetailScreen> {
   bool isTop = true;
   late ScrollController scrollController;
   final dataKey = List.generate(7, (index) => GlobalKey());
 
   @override
-  void initState(){
+  void initState() {
     scrollController = ScrollController();
     scrollController.addListener(() {
-        final isTopNow = scrollController.position.pixels <= 270;
-        if (isTopNow){
-          setState(() {
-            isTop = true;
-          });
-        }
-        else{
-          setState(() {
-            isTop = false;
-          });
-        }
-    });      
+      final isTopNow = scrollController.position.pixels <= 270;
+      if (isTopNow) {
+        setState(() {
+          isTop = true;
+        });
+      } else {
+        setState(() {
+          isTop = false;
+        });
+      }
+    });
     super.initState();
   }
 
@@ -57,87 +56,84 @@ class _RoomDetailScreenState extends State<RoomDetailScreen>{
           controller: scrollController,
           slivers: [
             RoomDetailAppbar(
-              isTop: isTop, 
-              hotelData: widget.hotelData, 
+              isTop: isTop,
+              hotelData: widget.hotelData,
               listDataKey: dataKey,
             ),
             SliverToBoxAdapter(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: paddingLR, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: paddingLR, vertical: 10),
                 alignment: Alignment.centerLeft,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, 
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     RoomDetailOverview(
                       key: dataKey[0],
-                      hotelData: widget.hotelData, 
-                      listRoomData: widget.hotelData.roomTypes!, 
+                      hotelData: widget.hotelData,
+                      listRoomData: widget.hotelData.roomTypes!,
                     ),
                     TitleWidget(
                       key: dataKey[1],
-                      title: "Vui lòng chọn phòng", 
+                      title: "Vui lòng chọn phòng",
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
                         alignment: Alignment.centerLeft,
                         height: 25,
-                        width: MediaQuery.of(context).size.width *.6,
+                        width: MediaQuery.of(context).size.width * .6,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: colorD67402,
                         ),
                         child: const Center(
-                          child: Text(
-                            "Giá phòng từ ngày: 16-8-2022 - 30-8-2022", 
-                            style: TextStyle(color: colorWhite, fontSize: 12),
-                          )
-                        ),
+                            child: Text(
+                          "Giá phòng từ ngày: 16-8-2022 - 30-8-2022",
+                          style: TextStyle(color: colorWhite, fontSize: 12),
+                        )),
                       ),
                     ),
                     Column(
                       children: List.generate(
-                        widget.hotelData.roomTypes!.length, 
-                        (index) => RoomCardItem(roomTypeData: widget.hotelData.roomTypes![index],)
-                      ),
+                          widget.hotelData.roomTypes!.length,
+                          (index) => RoomCardItem(
+                                roomTypeData:
+                                    widget.hotelData.roomTypes![index],
+                              )),
                     ),
                     TitleWidget(
                       key: dataKey[2],
-                      title: "Đánh giá gần đây", 
+                      title: "Đánh giá gần đây",
                     ),
                     const RoomDetailFeedBack(),
                     TitleWidget(
                       key: dataKey[3],
-                      title: "Điểm tham quan gần đó", 
+                      title: "Điểm tham quan gần đó",
                     ),
                     const RoomDetailAttractions(),
                     TitleWidget(
                       key: dataKey[4],
-                      title: "Chính sách chỗ lưu trú", 
+                      title: "Chính sách chỗ lưu trú",
                     ),
-                    const RoomDetailPolicy(), 
+                    const RoomDetailPolicy(),
                     TitleWidget(
                       key: dataKey[5],
-                      title: "Liên hệ với chúng tôi", 
+                      title: "Liên hệ với chúng tôi",
                     ),
                     const RoomDetailSupport(),
                     TitleWidget(
                       key: dataKey[6],
-                      title: "Chỗ lưu trú gần đó", 
+                      title: "Chỗ lưu trú gần đó",
                     ),
                   ],
                 ),
               ),
             ),
-            MoreHotelWidget(
-              itemWidth: itemWidth, 
-              itemHeight: itemHeight
-            )
+            MoreHotelWidget(itemWidth: itemWidth, itemHeight: itemHeight)
           ],
         ),
       ),
-    ); 
+    );
   }
 }
-
-

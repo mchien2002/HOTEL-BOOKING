@@ -13,18 +13,19 @@ class MoreHotelWidget extends StatefulWidget {
   // SIZE OF CARD MINI
   final double itemWidth;
   final double itemHeight;
-  
+
   @override
   State<MoreHotelWidget> createState() => _MoreHotelWidgetState();
-} 
+}
 
-class _MoreHotelWidgetState extends State<MoreHotelWidget> implements HotelListViewContract{
+class _MoreHotelWidgetState extends State<MoreHotelWidget>
+    implements HotelListViewContract {
   bool _isLoading = true;
   List _hotelData = [];
   HotelListPresenter? _hotelListPresenter;
 
   @override
-  void initState(){
+  void initState() {
     _hotelListPresenter = HotelListPresenter(this);
     _hotelListPresenter!.loadHotelList();
     super.initState();
@@ -45,21 +46,27 @@ class _MoreHotelWidgetState extends State<MoreHotelWidget> implements HotelListV
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? const SliverToBoxAdapter(child: SpinKitThreeInOut(color: colorB2B2B2,),) : SliverGrid(
-      // BUILD GRID VIEW FOR CARD MINI
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: (widget.itemWidth / widget.itemHeight),
-        crossAxisSpacing: 0
-      ),
-      delegate: SliverChildBuilderDelegate((context, index){
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: paddingLR),
-          child: CardMiniItem(hotelData: _hotelData[index],)
-        );
-      },
-      childCount: _hotelData.length,
-      )
-    );
+    return _isLoading
+        ? const SliverToBoxAdapter(
+            child: SpinKitThreeInOut(
+              color: colorB2B2B2,
+            ),
+          )
+        : SliverGrid(
+            // BUILD GRID VIEW FOR CARD MINI
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: (widget.itemWidth / widget.itemHeight),
+                crossAxisSpacing: 0),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: paddingLR),
+                    child: CardMiniItem(
+                      hotelData: _hotelData[index],
+                    ));
+              },
+              childCount: _hotelData.length,
+            ));
   }
 }

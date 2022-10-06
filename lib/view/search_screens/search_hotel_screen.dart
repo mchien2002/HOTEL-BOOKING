@@ -11,35 +11,35 @@ import '../components/search/search_appbar.dart';
 import '../components/search/search_notification_component.dart';
 
 class SearchHotelScreen extends StatefulWidget {
-  const SearchHotelScreen({ Key? key }) : super(key: key);
+  const SearchHotelScreen({Key? key}) : super(key: key);
 
   @override
   State<SearchHotelScreen> createState() => _SearchHotelScreenState();
 }
 
-class _SearchHotelScreenState extends State<SearchHotelScreen> implements HotelListViewContract{
+class _SearchHotelScreenState extends State<SearchHotelScreen>
+    implements HotelListViewContract {
   bool _isTop = true;
   bool _isLoading = true;
   String _errorMessage = '';
-  late ScrollController scrollController; 
+  late ScrollController scrollController;
   List _hotelData = [];
   HotelListPresenter? _hotelListPresenter;
 
   @override
-  void initState(){
+  void initState() {
     scrollController = ScrollController();
     scrollController.addListener(() {
       final isTopNow = scrollController.position.pixels <= 550;
-      if (isTopNow){
+      if (isTopNow) {
         setState(() {
           _isTop = true;
         });
-      }
-      else{
+      } else {
         setState(() {
           _isTop = false;
         });
-      } 
+      }
     });
     _hotelListPresenter = HotelListPresenter(this);
     _hotelListPresenter!.loadHotelList();
@@ -64,81 +64,93 @@ class _SearchHotelScreenState extends State<SearchHotelScreen> implements HotelL
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight) / 3; 
+    final double itemHeight = (size.height - kToolbarHeight) / 3;
     final double itemWidth = size.width / 2;
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         return false;
       },
       child: Scaffold(
-        backgroundColor: colorF2F9FE,
-        body: _errorMessage != '' ? ErrorScreen(errorMessage: _errorMessage) : CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            SearchAppBar(isTop: _isTop,),
-            const SliverToBoxAdapter(
-              child: NotificationComponent(),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: paddingLR),
-                child: Column(
-                  children: [
-                    const TitleWidget(
-                      title: "Ưu đãi dành cho bạn",
-                      more: "Xem thêm",
+          backgroundColor: colorF2F9FE,
+          body: _errorMessage != ''
+              ? ErrorScreen(errorMessage: _errorMessage)
+              : CustomScrollView(
+                  controller: scrollController,
+                  slivers: [
+                    SearchAppBar(
+                      isTop: _isTop,
                     ),
-                    SizedBox(
-                      height: 450,
-                      child: _isLoading ? const SpinKitThreeInOut(color: colorB2B2B2,) : ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _hotelData.length,
-                        itemBuilder: (context, index){
-                          return Row(
-                            children: [
-                              CardLarge(hotelData: _hotelData[index],),
-                              const SizedBox(width: 10,),
-                            ],
-                          );
-                        },
-                      ),
+                    const SliverToBoxAdapter(
+                      child: NotificationComponent(),
                     ),
-                    const TitleWidget(
-                      title: "Combo giá tốt", 
-                      more: "Xem thêm"
-                    ),
-                    SizedBox(
-                      height: 450,
-                      child: _isLoading ? const SpinKitThreeInOut(color: colorB2B2B2,) : ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _hotelData.length,
-                        itemBuilder: (context, index){
-                          return Row(
-                            children: [
-                              CardLarge(hotelData: _hotelData[index],),
-                              const SizedBox(width: 10,),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                    const TitleWidget(
-                      title: "Mới nhất", 
-                      more: "Tất cả"
-                    ),
+                    SliverToBoxAdapter(
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: paddingLR),
+                            child: Column(
+                              children: [
+                                const TitleWidget(
+                                  title: "Ưu đãi dành cho bạn",
+                                  more: "Xem thêm",
+                                ),
+                                SizedBox(
+                                  height: 450,
+                                  child: _isLoading
+                                      ? const SpinKitThreeInOut(
+                                          color: colorB2B2B2,
+                                        )
+                                      : ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: _hotelData.length,
+                                          itemBuilder: (context, index) {
+                                            return Row(
+                                              children: [
+                                                CardLarge(
+                                                  hotelData: _hotelData[index],
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                ),
+                                const TitleWidget(
+                                    title: "Combo giá tốt", more: "Xem thêm"),
+                                SizedBox(
+                                  height: 450,
+                                  child: _isLoading
+                                      ? const SpinKitThreeInOut(
+                                          color: colorB2B2B2,
+                                        )
+                                      : ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: _hotelData.length,
+                                          itemBuilder: (context, index) {
+                                            return Row(
+                                              children: [
+                                                CardLarge(
+                                                  hotelData: _hotelData[index],
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                ),
+                                const TitleWidget(
+                                    title: "Mới nhất", more: "Tất cả"),
+                              ],
+                            ))),
+                    MoreHotelWidget(
+                        itemWidth: itemWidth, itemHeight: itemHeight)
                   ],
-                )
-              )
-            ),
-            MoreHotelWidget(
-              itemWidth: itemWidth, 
-              itemHeight: itemHeight
-            )
-          ],
-        )
-      ),
+                )),
     );
   }
 }

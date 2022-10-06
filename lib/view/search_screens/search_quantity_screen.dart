@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hotel_service/data_sources/init.dart';
 import '../components/search/search_quantity_appbar.dart';
 import '../components/search/search_quantity_body.dart';
+
 class SearchQuantityScreen extends StatefulWidget {
-  const SearchQuantityScreen({ Key? key }) : super(key: key);
+  const SearchQuantityScreen({Key? key}) : super(key: key);
 
   @override
   _SearchQuantityScreenState createState() => _SearchQuantityScreenState();

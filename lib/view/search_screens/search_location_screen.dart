@@ -4,8 +4,8 @@ import 'package:hotel_service/data_sources/init.dart';
 import 'package:hotel_service/view/components/search/search_location_appbar.dart';
 import '../components/search/search_location_body.dart';
 
-class SearchLocationScreen extends StatelessWidget{
-  const SearchLocationScreen({ Key? key }) : super(key: key);
+class SearchLocationScreen extends StatelessWidget {
+  const SearchLocationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,3 @@ class SearchLocationScreen extends StatelessWidget{
     );
   }
 }
-
-
-
-
-

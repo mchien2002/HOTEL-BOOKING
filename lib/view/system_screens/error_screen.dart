@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data_sources/init.dart';
 
 class ErrorScreen extends StatefulWidget {
-  const ErrorScreen({ Key? key, required this.errorMessage }) : super(key: key);
+  const ErrorScreen({Key? key, required this.errorMessage}) : super(key: key);
   final String errorMessage;
 
   @override
@@ -18,10 +18,20 @@ class _ErrorScreenState extends State<ErrorScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset("assets/images/img_data_error.png"),
-          const SizedBox(height: 10,),
-          const Text("SOME THING WENT WRONG!", style: TextStyle(color: color777777),),
-          const SizedBox(height: 10,),
-          Text(widget.errorMessage, style: const TextStyle(color: color777777),),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            "SOME THING WENT WRONG!",
+            style: TextStyle(color: color777777),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            widget.errorMessage,
+            style: const TextStyle(color: color777777),
+          ),
         ],
       ),
     );

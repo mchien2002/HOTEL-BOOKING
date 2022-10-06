@@ -48,7 +48,7 @@ class Price {
 
   @HiveField(14)
   int? _weekendPrice;
-  
+
   Price(
       {int? additionalChildrenFee,
       int? additionalGuestsFee,

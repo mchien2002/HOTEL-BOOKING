@@ -4,7 +4,8 @@ import '../global/card.dart';
 
 class SearchFilterBody extends StatelessWidget {
   const SearchFilterBody({
-    Key? key, this.data,
+    Key? key,
+    this.data,
   }) : super(key: key);
   final data;
 
@@ -12,13 +13,16 @@ class SearchFilterBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // BUILD SEARCH FILTER BODY
     return ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) => Column(
-        children: [
-          CardLarge(hotelData: data[index],),
-          const SizedBox(height: 10,)
-        ],
-      )
-    );
+        itemCount: data.length,
+        itemBuilder: (context, index) => Column(
+              children: [
+                CardLarge(
+                  hotelData: data[index],
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
+            ));
   }
 }

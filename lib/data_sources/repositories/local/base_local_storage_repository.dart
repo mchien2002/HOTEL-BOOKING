@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:hotel_service/models/roomtype_model.dart';
 import '../../../models/hotel_data_model.dart';
 
-abstract class BaseLocalStorageRepository{
+abstract class BaseLocalStorageRepository {
   Future<Box> openBox(String boxName);
   List<dynamic> getWishListHotelData(Box box);
   HotelData getHotelByID(Box box, String id);

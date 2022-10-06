@@ -18,40 +18,42 @@ import '../../../models/roomtype_model.dart';
 import '../../../models/api_response.dart';
 import '../local/local_storage_repository_iml.dart';
 
-class HotelRepositoryIml implements HotelRepository, RoomTypeRepository, BookingRepository{
+class HotelRepositoryIml
+    implements HotelRepository, RoomTypeRepository, BookingRepository {
   static const HOST = "http://157.245.57.162:3000";
   static const ACCESS_TOKEN_HEADER = "Authorization";
-  final LocalStorageRepositoryIml _localStorageRepository = LocalStorageRepositoryIml();
+  final LocalStorageRepositoryIml _localStorageRepository =
+      LocalStorageRepositoryIml();
   Dio _dio = Dio();
 
-  HotelRepositoryIml(){ 
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: HOST,
-        receiveDataWhenStatusError: true,
-      )
-    )..interceptors.add(LogInterceptor(responseBody: true, requestBody: false));
+  HotelRepositoryIml() {
+    _dio = Dio(BaseOptions(
+      baseUrl: HOST,
+      receiveDataWhenStatusError: true,
+    ))
+      ..interceptors
+          .add(LogInterceptor(responseBody: true, requestBody: false));
   }
 
-  setToken(String token){
+  setToken(String token) {
     _dio.options.headers[ACCESS_TOKEN_HEADER] = "Bearer $token";
   }
 
-  callError(BuildContext context, error){
-    if (error is String){
+  callError(BuildContext context, error) {
+    if (error is String) {
       showDialog(
-        context: context, 
-        builder: (context) => DialogWindow(code: error)
-      );
+          context: context, builder: (context) => DialogWindow(code: error));
     }
   }
 
   @override
-  Future setDataLocal() async{
-    Box boxHotel = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHotel);
-    Box boxHotelID = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHodelDetail);
+  Future setDataLocal() async {
+    Box boxHotel = await _localStorageRepository
+        .openBox(LocalStorageRepositoryIml.boxHotel);
+    Box boxHotelID = await _localStorageRepository
+        .openBox(LocalStorageRepositoryIml.boxHodelDetail);
     List<HotelData> hotelsListModel = await fetchHotelList();
-    for (HotelData item in hotelsListModel){
+    for (HotelData item in hotelsListModel) {
       _localStorageRepository.addData(boxHotel, item);
       HotelData? hotelTemp = await fetchHotelByID(item.id!);
       _localStorageRepository.addData(boxHotelID, hotelTemp!);
@@ -59,30 +61,31 @@ class HotelRepositoryIml implements HotelRepository, RoomTypeRepository, Booking
   }
 
   @override
-  Future fetchHotelList() async{
+  Future fetchHotelList() async {
     SharedPreferences storage = await SharedPreferences.getInstance();
-    Box boxHotel = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHotel);
+    Box boxHotel = await _localStorageRepository
+        .openBox(LocalStorageRepositoryIml.boxHotel);
     // Box boxHotelID = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHodelDetail);
     setToken(storage.getString('data')!);
-    try{
+    try {
       Response response = await _dio.get(
-        HotelRepository.HOTEL_DATA, 
+        HotelRepository.HOTEL_DATA,
         queryParameters: {
           "limit": 10,
           "page": 1,
         },
       );
-      if (response.statusCode == 200){
-        List<HotelData>? hotelsListModel = HotelsListModel.fromJson(response.data).data;
+      if (response.statusCode == 200) {
+        List<HotelData>? hotelsListModel =
+            HotelsListModel.fromJson(response.data).data;
         return hotelsListModel;
       }
-    }
-    on DioError catch(error){
-      List<dynamic> hotelsListModel = _localStorageRepository.getWishListHotelData(boxHotel);  
-      if (hotelsListModel.isNotEmpty){
+    } on DioError catch (error) {
+      List<dynamic> hotelsListModel =
+          _localStorageRepository.getWishListHotelData(boxHotel);
+      if (hotelsListModel.isNotEmpty) {
         return hotelsListModel;
-      }
-      else{
+      } else {
         throw DioExceptions.fromDioError(error).toString();
       }
     }
@@ -92,74 +95,65 @@ class HotelRepositoryIml implements HotelRepository, RoomTypeRepository, Booking
   Future fetchRoomList(String idHotel) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
     setToken(storage.getString('data')!);
-    try{
+    try {
       Response response = await _dio.get(
-        RoomTypeRepository.ROOM_DATA, 
-        queryParameters: {
-          "limit": 5,
-          "page": 1,
-          "hotel_eq": idHotel
-        },
+        RoomTypeRepository.ROOM_DATA,
+        queryParameters: {"limit": 5, "page": 1, "hotel_eq": idHotel},
       );
-      if (response.statusCode == 200){
-        List<RoomType>? roomsListModel = RoomTypesListModel.fromJson(response.data).data;
+      if (response.statusCode == 200) {
+        List<RoomType>? roomsListModel =
+            RoomTypesListModel.fromJson(response.data).data;
         return roomsListModel;
-      }
-      else{
+      } else {
         return null;
       }
-    }
-    on DioError catch(e){
+    } on DioError catch (e) {
       throw DioExceptions.fromDioError(e).toString();
     }
   }
-  
+
   @override
-  Future fetchHotelByID(String idHotel) async{
+  Future fetchHotelByID(String idHotel) async {
     SharedPreferences storage = await SharedPreferences.getInstance();
-    Box box = await _localStorageRepository.openBox(LocalStorageRepositoryIml.boxHodelDetail);
+    Box box = await _localStorageRepository
+        .openBox(LocalStorageRepositoryIml.boxHodelDetail);
     setToken(storage.getString('data')!);
-    try{
+    try {
       Response response = await _dio.get(
-        "${HotelRepository.HOTEL_DATA}/$idHotel", 
-        queryParameters: {
-          'id': idHotel
-        },
+        "${HotelRepository.HOTEL_DATA}/$idHotel",
+        queryParameters: {'id': idHotel},
       );
-      if (response.statusCode == 200){
+      if (response.statusCode == 200) {
         HotelData hotelByID = HotelByID.fromJson(response.data).data!;
         return hotelByID;
       }
-    }
-    on DioError catch(error){
-      try{
-        HotelData hotelData = _localStorageRepository.getHotelByID(box, idHotel);
+    } on DioError catch (error) {
+      try {
+        HotelData hotelData =
+            _localStorageRepository.getHotelByID(box, idHotel);
         return hotelData;
-      }
-      catch(e){
+      } catch (e) {
         throw DioExceptions.fromDioError(error).toString();
       }
     }
   }
-  
+
   @override
-  Future<String?> postBooking(BookingModel bookingModel) async{
+  Future<String?> postBooking(BookingModel bookingModel) async {
     EasyLoading.show();
     SharedPreferences storage = await SharedPreferences.getInstance();
     setToken(storage.getString('data')!);
     var data = jsonEncode(bookingModel.toJson());
     Response response;
-    try{
+    try {
       response = await _dio.post(BookingRepository.BOOKING_POST, data: data);
-      if (response.statusCode == 200){
+      if (response.statusCode == 200) {
         EasyLoading.dismiss();
         return response.data['message'];
-      }
-      else{
+      } else {
         return null;
       }
-    }
-    on DioError catch(error){
+    } on DioError catch (error) {
       EasyLoading.dismiss();
       final errorMessage = DioExceptions.fromDioError(error).toString();
       throw errorMessage;

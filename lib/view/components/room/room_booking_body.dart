@@ -15,36 +15,35 @@ import '../../../provider/search_provider.dart';
 import '../global/dialog_window.dart';
 
 class RoomBookingBody extends StatefulWidget {
-  const RoomBookingBody({ Key? key, required this.roomTypeData, required this.hotelName }) : super(key: key);
+  const RoomBookingBody(
+      {Key? key, required this.roomTypeData, required this.hotelName})
+      : super(key: key);
   final RoomType roomTypeData;
   final String hotelName;
-  
+
   @override
   _RoomBookingBodyState createState() => _RoomBookingBodyState();
 }
 
-class _RoomBookingBodyState extends State<RoomBookingBody> implements BookingViewContract{
+class _RoomBookingBodyState extends State<RoomBookingBody>
+    implements BookingViewContract {
   BookingModel bookingRequest = BookingModel();
   DateTime now = DateTime.now();
   BookingPresenter? _bookingPresenter;
 
-   @override
+  @override
   onLoadError(String error) {
     setState(() {
       showDialog(
-        context: context, 
-        builder: (context) => DialogWindow(code: error)
-      );
+          context: context, builder: (context) => DialogWindow(code: error));
     });
   }
-  
+
   @override
   onResponseBooking(String response) {
     setState(() {
       showDialog(
-        context: context, 
-        builder: (context) => DialogWindow(code: response)
-      );
+          context: context, builder: (context) => DialogWindow(code: response));
     });
   }
 
@@ -58,81 +57,88 @@ class _RoomBookingBodyState extends State<RoomBookingBody> implements BookingVie
       child: ListView(
         children: [
           BookingField(
-            textController: context.watch<BookingProvider>().textControllers, 
+            textController: context.watch<BookingProvider>().textControllers,
             roomTypeName: widget.roomTypeData.name!,
           ),
-          RoomOtherRequirements(textEditingController: context.watch<BookingProvider>().textRequirements,),
+          RoomOtherRequirements(
+            textEditingController:
+                context.watch<BookingProvider>().textRequirements,
+          ),
           RoomBookingRequest(
-            roomType: widget.roomTypeData, 
+            roomType: widget.roomTypeData,
             hotelName: widget.hotelName,
           ),
-          RoomBookingPay(roomTypeData: widget.roomTypeData,),
+          RoomBookingPay(
+            roomTypeData: widget.roomTypeData,
+          ),
           SizedBox(
             height: 50,
             child: RaisedButton(
-              onPressed: context.watch<BookingProvider>().pressBookingButton ? 
-              () => postDataBooking(
-                context,
-                DateTime(now.year, now.month, now.day).toUtc().toIso8601String(),
-                DateTime(now.year, now.month, now.day + 1).toUtc().toIso8601String(),          
-                bookingProvider.textRequirements.text, 
-                widget.roomTypeData.id!, 
-                bookingProvider.textControllers['country']!.text, 
-                bookingProvider.textControllers['email']!.text, 
-                "${bookingProvider.textControllers['firstName']!.text} ${bookingProvider.textControllers['lastName']!.text}", 
-                bookingProvider.textControllers['phone']!.text, 
-                widget.roomTypeData.rooms!, 
-                2, 
-                searchProvider.rooms[2], 
-                widget.roomTypeData.hotel!, 
-                searchProvider.rooms[2], 
-                widget.roomTypeData.rooms![0].price!.nightlyPrice!, 
-                widget.roomTypeData.id!
-              ) 
-              : null,
+              onPressed: context.watch<BookingProvider>().pressBookingButton
+                  ? () => postDataBooking(
+                      context,
+                      DateTime(now.year, now.month, now.day)
+                          .toUtc()
+                          .toIso8601String(),
+                      DateTime(now.year, now.month, now.day + 1)
+                          .toUtc()
+                          .toIso8601String(),
+                      bookingProvider.textRequirements.text,
+                      widget.roomTypeData.id!,
+                      bookingProvider.textControllers['country']!.text,
+                      bookingProvider.textControllers['email']!.text,
+                      "${bookingProvider.textControllers['firstName']!.text} ${bookingProvider.textControllers['lastName']!.text}",
+                      bookingProvider.textControllers['phone']!.text,
+                      widget.roomTypeData.rooms!,
+                      2,
+                      searchProvider.rooms[2],
+                      widget.roomTypeData.hotel!,
+                      searchProvider.rooms[2],
+                      widget.roomTypeData.rooms![0].price!.nightlyPrice!,
+                      widget.roomTypeData.id!)
+                  : null,
               color: colorPrimary,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
               child: const Center(
-                child: Text(
-                  "Thực hiện đặt phòng", 
-                  style: TextStyle(color: colorWhite, fontSize: 17),
-                )
-              ),
+                  child: Text(
+                "Thực hiện đặt phòng",
+                style: TextStyle(color: colorWhite, fontSize: 17),
+              )),
             ),
           )
         ],
       ),
     );
   }
+
   // FUNC TO SEND DATO POST TO SERVER
-  void postDataBooking (
-    BuildContext context,
-    String dataCheckin, 
-    String dataCheckout, 
-    String description,
-    String cardID, 
-    String country, 
-    String email, 
-    String name, 
-    String phone, 
-    List<Rooms> rooms,
-    int night,
-    int childrent, 
-    String hotel, 
-    int infants,
-    int price, 
-    String roomType
-  ) async {
+  void postDataBooking(
+      BuildContext context,
+      String dataCheckin,
+      String dataCheckout,
+      String description,
+      String cardID,
+      String country,
+      String email,
+      String name,
+      String phone,
+      List<Rooms> rooms,
+      int night,
+      int childrent,
+      String hotel,
+      int infants,
+      int price,
+      String roomType) async {
     List<RoomsBooking> listRoomBooking = [];
-    for (Rooms item in rooms){
+    for (Rooms item in rooms) {
       RoomsBooking temp = RoomsBooking(
-        children: childrent,
-        hotel: widget.roomTypeData.hotel,
-        id: item.id,
-        price: item.price!.nightlyPrice! * night,
-        roomType: item.roomType,
-        infants: infants
-      );
+          children: childrent,
+          hotel: widget.roomTypeData.hotel,
+          id: item.id,
+          price: item.price!.nightlyPrice! * night,
+          roomType: item.roomType,
+          infants: infants);
       listRoomBooking.add(temp);
     }
     bookingRequest = BookingModel(

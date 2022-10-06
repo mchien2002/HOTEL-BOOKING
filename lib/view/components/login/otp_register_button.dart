@@ -10,7 +10,8 @@ import '../../../provider/register_provider.dart';
 
 class OTPRegisterButton extends StatefulWidget {
   const OTPRegisterButton({
-    Key? key, required this.timer,
+    Key? key,
+    required this.timer,
   }) : super(key: key);
   final Timer timer;
 
@@ -18,7 +19,8 @@ class OTPRegisterButton extends StatefulWidget {
   State<OTPRegisterButton> createState() => _OTPRegisterButtonState();
 }
 
-class _OTPRegisterButtonState extends State<OTPRegisterButton> implements RegisterViewContract{
+class _OTPRegisterButtonState extends State<OTPRegisterButton>
+    implements RegisterViewContract {
   RegisterPresenter? _registerPresenter;
 
   @override
@@ -33,51 +35,49 @@ class _OTPRegisterButtonState extends State<OTPRegisterButton> implements Regist
             height: 40,
             width: 120,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              border: Border.all(color: colorPrimary, width: 2)
-            ),
+                borderRadius: BorderRadius.circular(40),
+                border: Border.all(color: colorPrimary, width: 2)),
             child: const Center(
-              child: Text(
-                "Gửi lại mã", 
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: color929394),
-              )
-            ),
+                child: Text(
+              "Gửi lại mã",
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: color929394),
+            )),
           ),
         ),
-
         InkWell(
           onTap: () {
             widget.timer.cancel();
             Get.back();
           },
-          child: const Text(
-            "Đổi số điện thọai",
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: color929394)
-          ),
+          child: const Text("Đổi số điện thọai",
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: color929394)),
         ),
       ],
     );
   }
 
-  btnResendCode(BuildContext context){
+  btnResendCode(BuildContext context) {
     _registerPresenter = RegisterPresenter(this);
-    _registerPresenter!.postPhoneRequest(context.read<RegisterInfoProvider>().phone, false);
-    
+    _registerPresenter!
+        .postPhoneRequest(context.read<RegisterInfoProvider>().phone, false);
   }
-  
+
   @override
   onLoadError(String error) {
     showDialog(
-      context: context, 
-      builder: (context) => DialogWindow(code: error)
-    );
+        context: context, builder: (context) => DialogWindow(code: error));
   }
-  
+
   @override
   onResponseRegister(String response) {
     context.read<RegisterInfoProvider>().returnLogin(widget.timer);
-    Get.offAndToNamed(RoutesClass.getConfirmOTPRoute(context.read<RegisterInfoProvider>().phone));
+    Get.offAndToNamed(RoutesClass.getConfirmOTPRoute(
+        context.read<RegisterInfoProvider>().phone));
   }
 }
-
-
